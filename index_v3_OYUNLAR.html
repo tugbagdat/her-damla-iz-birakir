@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Su Ayak İzi Dergisi</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --ocean:#0077B6;--sky:#00B4D8;--foam:#90E0EF;
+  --deep:#03045E;--leaf:#2D6A4F;--mint:#52B788;
+  --coral:#E76F51;--amber:#F4A261;
+  --bg:#F0F7FF;--card:#fff;--text:#1a1a2e;--sub:#5a6475;
+}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* SPLASH */
+#splash{position:fixed;inset:0;background:linear-gradient(160deg,var(--deep) 0%,var(--ocean) 60%,var(--sky) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;transition:opacity .7s}
+#splash.hide{opacity:0;pointer-events:none}
+.splash-drop{font-size:80px;animation:dropBounce 1.2s ease infinite alternate}
+@keyframes dropBounce{from{transform:translateY(-12px)}to{transform:translateY(12px)}}
+.splash-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:#fff;margin:16px 0 8px;text-align:center;line-height:1.2}
+.splash-sub{font-size:13px;color:rgba(255,255,255,.7);letter-spacing:1px}
+.splash-bar{width:200px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin-top:40px;overflow:hidden}
+.splash-fill{height:100%;background:#90E0EF;border-radius:2px;animation:fill 2.2s ease forwards}
+@keyframes fill{from{width:0}to{width:100%}}
+
+#app{display:none;flex-direction:column;min-height:100vh}
+#app.show{display:flex}
+
+.bnav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e0ecf5;display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
+.bnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px 6px;cursor:pointer;border:none;background:transparent;transition:transform .15s}
+.bnav-btn:active{transform:scale(.92)}
+.bnav-icon{font-size:20px;line-height:1}
+.bnav-lbl{font-size:9px;font-weight:700;color:#9aabb8}
+.bnav-btn.act .bnav-lbl{color:var(--ocean)}
+
+.page{display:none;flex:1;overflow-y:auto;padding-bottom:80px}
+.page.show{display:block}
+.section-ttl{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ocean);padding:20px 16px 10px}
+
+/* HOME */
+.home-hero{background:linear-gradient(160deg,var(--deep) 0%,var(--ocean) 55%,var(--sky) 100%);padding:28px 20px 56px;position:relative;overflow:hidden}
+.home-hero::after{content:'';position:absolute;bottom:-24px;left:-10%;right:-10%;height:60px;background:var(--bg);border-radius:50%}
+.hero-wave{position:absolute;top:10px;right:-20px;font-size:120px;opacity:.08;line-height:1}
+.hero-logo{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.logo-drop{width:40px;height:40px;background:rgba(255,255,255,.2);border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center}
+.logo-drop span{transform:rotate(45deg);font-size:20px}
+.logo-text{font-family:'Playfair Display',serif;color:#fff;font-size:15px;font-weight:700;line-height:1.2}
+.logo-text small{display:block;font-family:'Nunito',sans-serif;font-size:10px;color:rgba(255,255,255,.6);font-weight:400;letter-spacing:1px;text-transform:uppercase}
+.hero-main{font-family:'Playfair Display',serif;font-size:30px;font-weight:900;color:#fff;line-height:1.15;margin-bottom:8px;position:relative;z-index:1}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.75);position:relative;z-index:1}
+.stat-bar{display:flex;margin:8px 16px 0;background:linear-gradient(90deg,var(--deep),var(--ocean));border-radius:14px;overflow:hidden}
+.stat-col{flex:1;padding:12px 4px;text-align:center;border-right:1px solid rgba(255,255,255,.1)}
+.stat-col:last-child{border:none}
+.stat-n{font-family:'Playfair Display',serif;font-size:16px;font-weight:900;color:var(--foam);line-height:1}
+.stat-l{font-size:9px;color:rgba(255,255,255,.6);font-weight:600;margin-top:3px;line-height:1.2}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px}
+.icard{border-radius:14px;padding:14px 12px;cursor:pointer;transition:transform .15s;position:relative;overflow:hidden;min-height:110px}
+.icard:active{transform:scale(.96)}
+.icard.blue{background:linear-gradient(135deg,#0077B6,#00B4D8)}
+.icard.green{background:linear-gradient(135deg,#2D6A4F,#52B788)}
+.icard.coral{background:linear-gradient(135deg,#C25B3B,#E76F51)}
+.icard.navy{background:linear-gradient(135deg,#03045E,#0077B6)}
+.icard.purple{background:linear-gradient(135deg,#6B2D8B,#A855C8)}
+.icard.teal{background:linear-gradient(135deg,#0F766E,#14B8A6)}
+.icard-badge{position:absolute;top:8px;right:8px;background:rgba(255,255,255,.22);border-radius:6px;padding:2px 7px;font-size:9px;font-weight:700;color:#fff}
+.icard-icon{font-size:26px;margin-bottom:6px}
+.icard-ttl{font-size:13px;font-weight:700;color:rgba(255,255,255,.95);line-height:1.3}
+.icard-sub{font-size:10px;color:rgba(255,255,255,.65);margin-top:3px}
+.feat-card{margin:0 16px;border-radius:16px;overflow:hidden;cursor:pointer;background:linear-gradient(160deg,var(--deep),var(--ocean));position:relative;min-height:160px;display:flex;align-items:flex-end}
+.feat-card::before{content:'💧';position:absolute;top:16px;right:16px;font-size:64px;opacity:.15}
+.feat-inner{position:relative;z-index:1;padding:16px 18px;background:linear-gradient(to top,rgba(3,4,94,.9) 0%,transparent 100%);width:100%}
+.feat-cat{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--foam);margin-bottom:4px}
+.feat-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:10px}
+.feat-btn{display:inline-block;padding:5px 14px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);border-radius:20px;font-size:11px;color:#fff;font-weight:700}
+.tip-list{display:flex;flex-direction:column;gap:8px;padding:0 16px}
+.tip-item{background:#fff;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,119,182,.07)}
+.tip-num{width:28px;height:28px;border-radius:50%;background:var(--ocean);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tip-txt{font-size:13px;color:var(--text);line-height:1.5;font-weight:600}
+
+/* BİLGİ */
+.bilgi-hero{background:linear-gradient(135deg,var(--deep),var(--ocean));padding:24px 20px 20px}
+.bilgi-hero-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:#fff;margin-bottom:4px}
+.bilgi-hero-sub{font-size:13px;color:rgba(255,255,255,.7)}
+.water-types{display:flex;flex-direction:column;gap:10px;padding:0 16px 16px}
+.wtype{border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+.wtype.blue-t{background:linear-gradient(135deg,#dbeeff,#c5e4ff)}
+.wtype.green-t{background:linear-gradient(135deg,#d8f3e3,#b8eacc)}
+.wtype.gray-t{background:linear-gradient(135deg,#e8ecf0,#d4dce5)}
+.wtype-icon{font-size:28px;flex-shrink:0}
+.wtype-ttl{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px}
+.wtype-desc{font-size:12px;color:var(--sub);line-height:1.5}
+.wtype-tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;margin-top:5px}
+.blue-t .wtype-tag{background:#0077B6;color:#fff}
+.green-t .wtype-tag{background:#2D6A4F;color:#fff}
+.gray-t .wtype-tag{background:#5a6475;color:#fff}
+.accordion{margin:0 16px 8px;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.acc-head{padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.acc-emoji{font-size:22px}
+.acc-ttl{flex:1;font-size:14px;font-weight:700;color:var(--text)}
+.acc-arrow{font-size:12px;color:var(--sub);transition:transform .3s;display:inline-block}
+.acc-body{display:none;padding:0 16px 16px;border-top:1px solid #edf2f7}
+.acc-body.open{display:block}
+.acc-body p{font-size:13px;color:var(--sub);line-height:1.7;margin-top:10px}
+.acc-body .fact{background:#EBF5FF;border-left:3px solid var(--ocean);border-radius:0 8px 8px 0;padding:10px 12px;margin-top:10px;font-size:12px;color:var(--ocean);font-weight:600;line-height:1.6}
+
+/* QUIZ */
+.quiz-hero{background:linear-gradient(135deg,#2D6A4F,#52B788);padding:24px 20px 20px}
+.quiz-hero-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:#fff;margin-bottom:4px}
+.quiz-hero-sub{font-size:13px;color:rgba(255,255,255,.75)}
+.quiz-wrap{padding:16px}
+.qprog-bar{display:flex;gap:4px;margin-bottom:16px}
+.qp{height:5px;flex:1;border-radius:3px;background:#e0ecf8;transition:background .3s}
+.qp.done{background:var(--leaf)}
+.qp.cur{background:var(--mint)}
+.qcard{background:#fff;border-radius:16px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.qcard-num{font-size:11px;font-weight:700;color:var(--sub);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.qcard-q{font-size:15px;font-weight:700;color:var(--text);line-height:1.45;margin-bottom:16px}
+.qopts{display:flex;flex-direction:column;gap:9px}
+.qopt{padding:12px 14px;border-radius:11px;border:1.5px solid #e0ecf8;font-size:13px;color:var(--text);cursor:pointer;transition:all .2s;background:#f7fbff;font-weight:600;text-align:left;width:100%}
+.qopt:active{transform:scale(.98)}
+.qopt.correct{border-color:#2D6A4F;background:#EAF7EE;color:#2D6A4F}
+.qopt.wrong{border-color:#E76F51;background:#FEEEEA;color:#C25B3B}
+.qfb{margin-top:12px;padding:11px 13px;border-radius:10px;font-size:12px;font-weight:600;line-height:1.5;display:none}
+.qfb.show{display:block}
+.qfb.ok{background:#EAF7EE;color:#2D6A4F}
+.qfb.err{background:#FEEEEA;color:#C25B3B}
+.qnext{margin-top:12px;width:100%;padding:12px;background:var(--ocean);color:#fff;border-radius:11px;border:none;font-size:14px;font-weight:700;cursor:pointer;display:none}
+.qnext:active{background:var(--deep)}
+.qnext.show{display:block}
+.qscore{background:#fff;border-radius:16px;padding:24px 18px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.qscore-trophy{font-size:60px;margin-bottom:12px}
+.qscore-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--text);margin-bottom:6px}
+.qscore-pts{font-size:36px;font-weight:900;color:var(--ocean);margin-bottom:4px}
+.qscore-sub{font-size:13px;color:var(--sub);margin-bottom:20px}
+.qscore-btn{padding:12px 28px;background:var(--ocean);color:#fff;border-radius:11px;border:none;font-size:14px;font-weight:700;cursor:pointer}
+
+/* ══ OYUNLAR ANA SAYFA ══ */
+.game-hero{background:linear-gradient(160deg,#03045E,#0077B6);padding:24px 20px 20px}
+.game-hero-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:#fff;margin-bottom:4px}
+.game-hero-sub{font-size:13px;color:rgba(255,255,255,.7)}
+.game-menu{padding:16px;display:flex;flex-direction:column;gap:12px}
+.game-card-btn{background:#fff;border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;box-shadow:0 3px 14px rgba(0,0,0,.08);transition:transform .15s;border:none;width:100%;text-align:left}
+.game-card-btn:active{transform:scale(.97)}
+.gcb-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.gcb-icon.g1{background:linear-gradient(135deg,#0077B6,#00B4D8)}
+.gcb-icon.g2{background:linear-gradient(135deg,#2D6A4F,#52B788)}
+.gcb-icon.g3{background:linear-gradient(135deg,#E76F51,#F4A261)}
+.gcb-icon.g4{background:linear-gradient(135deg,#6B2D8B,#A855C8)}
+.gcb-icon.g5{background:linear-gradient(135deg,#0F4C75,#1B98E0)}
+.gcb-info{flex:1}
+.gcb-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:3px}
+.gcb-desc{font-size:12px;color:var(--sub);line-height:1.4}
+.gcb-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;margin-top:5px;display:inline-block}
+.badge-easy{background:#EAF7EE;color:#2D6A4F}
+.badge-mid{background:#FFF3CD;color:#856404}
+.badge-hard{background:#FEEEEA;color:#C25B3B}
+.badge-mix{background:#EBF5FF;color:#0077B6}
+.gcb-arrow{font-size:18px;color:#bcc8d4}
+
+/* ══ OYUN EKRANLARI ORTAK ══ */
+.game-screen{display:none;padding-bottom:80px}
+.game-screen.show{display:block}
+.gs-header{padding:16px 16px 12px;display:flex;align-items:center;gap:10px;background:#fff;border-bottom:1px solid #edf2f7;position:sticky;top:0;z-index:10}
+.gs-back{width:36px;height:36px;border-radius:10px;background:var(--bg);border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gs-title{flex:1;font-size:15px;font-weight:700;color:var(--text)}
+.gs-score{font-size:13px;font-weight:700;color:var(--ocean)}
+.gs-body{padding:16px}
+
+/* ══ OYUN 1: EŞLEŞTİRME ══ */
+.match-desc{background:#EBF5FF;border-radius:10px;padding:10px 12px;font-size:13px;color:var(--ocean);font-weight:600;margin-bottom:16px;line-height:1.5}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.match-col{display:flex;flex-direction:column;gap:8px}
+.match-col-ttl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--sub);margin-bottom:4px;text-align:center}
+.match-item{padding:11px 10px;border-radius:11px;border:2px solid #e0ecf8;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;background:#fff;line-height:1.3}
+.match-item:active{transform:scale(.96)}
+.match-item.selected{border-color:var(--ocean);background:#EBF5FF;color:var(--ocean)}
+.match-item.matched{border-color:var(--leaf);background:#EAF7EE;color:var(--leaf);cursor:default}
+.match-item.wrong-flash{border-color:var(--coral);background:#FEEEEA;animation:wrongFlash .4s ease}
+@keyframes wrongFlash{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.match-result{text-align:center;padding:16px;background:#EAF7EE;border-radius:12px;display:none}
+.match-result.show{display:block}
+.match-result-title{font-size:18px;font-weight:700;color:var(--leaf);margin-bottom:6px}
+.match-result-sub{font-size:13px;color:var(--sub)}
+.game-restart-btn{width:100%;padding:12px;background:var(--ocean);color:#fff;border-radius:11px;border:none;font-size:14px;font-weight:700;cursor:pointer;margin-top:12px}
+
+/* ══ OYUN 2: DOĞRU/YANLIŞ ══ */
+.dy-card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);margin-bottom:14px}
+.dy-level{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.dy-level.easy{color:var(--leaf)}
+.dy-level.mid{color:#856404}
+.dy-level.hard{color:var(--coral)}
+.dy-stmt{font-size:16px;font-weight:700;color:var(--text);line-height:1.5;margin-bottom:20px}
+.dy-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dy-btn{padding:14px;border-radius:12px;border:2px solid;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.dy-btn:active{transform:scale(.96)}
+.dy-btn.true-btn{border-color:#2D6A4F;color:#2D6A4F;background:#EAF7EE}
+.dy-btn.false-btn{border-color:var(--coral);color:var(--coral);background:#FEEEEA}
+.dy-btn.correct-answer{background:var(--leaf);color:#fff;border-color:var(--leaf)}
+.dy-btn.wrong-answer{background:var(--coral);color:#fff;border-color:var(--coral)}
+.dy-feedback{margin-top:12px;padding:11px 13px;border-radius:10px;font-size:13px;font-weight:600;line-height:1.5;display:none}
+.dy-feedback.show{display:block}
+.dy-feedback.ok{background:#EAF7EE;color:#2D6A4F}
+.dy-feedback.err{background:#FEEEEA;color:#C25B3B}
+.dy-next{width:100%;padding:12px;background:var(--ocean);color:#fff;border-radius:11px;border:none;font-size:14px;font-weight:700;cursor:pointer;margin-top:10px;display:none}
+.dy-next.show{display:block}
+.dy-progress{display:flex;gap:4px;margin-bottom:14px}
+.dy-p{height:5px;flex:1;border-radius:3px;background:#e0ecf8}
+.dy-p.done{background:var(--leaf)}
+.dy-p.cur{background:var(--mint)}
+
+/* ══ OYUN 3: BOŞLUK DOLDURMA ══ */
+.fill-card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,.08);margin-bottom:14px}
+.fill-level{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.fill-level.easy{color:var(--leaf)}
+.fill-level.mid{color:#856404}
+.fill-level.hard{color:var(--coral)}
+.fill-stmt{font-size:14px;font-weight:600;color:var(--text);line-height:1.8;margin-bottom:14px}
+.fill-blank{display:inline-block;border-bottom:2.5px solid var(--ocean);min-width:70px;color:var(--ocean);font-weight:700;padding:0 4px;text-align:center}
+.fill-opts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.fill-opt{padding:8px 14px;border-radius:20px;border:1.5px solid #e0ecf8;font-size:13px;font-weight:700;cursor:pointer;background:#f7fbff;color:var(--text);transition:all .2s}
+.fill-opt:active{transform:scale(.96)}
+.fill-opt.used{opacity:.4;cursor:default}
+.fill-opt.wrong-sel{border-color:var(--coral);background:#FEEEEA;color:var(--coral)}
+.fill-check{width:100%;padding:11px;background:var(--ocean);color:#fff;border-radius:11px;border:none;font-size:13px;font-weight:700;cursor:pointer;display:none}
+.fill-check.show{display:block}
+.fill-feedback{padding:10px 12px;border-radius:10px;font-size:13px;font-weight:600;margin-top:10px;display:none;line-height:1.5}
+.fill-feedback.show{display:block}
+.fill-feedback.ok{background:#EAF7EE;color:#2D6A4F}
+.fill-feedback.err{background:#FEEEEA;color:#C25B3B}
+.fill-next{width:100%;padding:12px;background:var(--ocean);color:#fff;border-radius:11px;border:none;font-size:14px;font-weight:700;cursor:pointer;margin-top:10px;display:none}
+.fill-next.show{display:block}
+
+/* ══ OYUN 4: ÇARKIFELEK ══ */
+.wheel-wrap{display:flex;flex-direction:column;align-items:center;padding:0 16px}
+.wheel-container{position:relative;width:280px;height:280px;margin:16px 0}
+#wheelCanvas{border-radius:50%;display:block}
+.wheel-pointer{position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:28px solid var(--coral);filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
+.wheel-spin-btn{padding:14px 40px;background:linear-gradient(135deg,var(--coral),var(--amber));color:#fff;border-radius:30px;border:none;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(231,111,81,.4);transition:transform .15s}
+.wheel-spin-btn:active{transform:scale(.95)}
+.wheel-spin-btn:disabled{opacity:.6;cursor:default}
+.wheel-question-box{background:#fff;border-radius:16px;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,.08);width:100%;margin-top:14px;display:none}
+.wheel-question-box.show{display:block}
+.wheel-category{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.wheel-q{font-size:15px;font-weight:700;color:var(--text);line-height:1.45;margin-bottom:14px}
+.wheel-opts{display:flex;flex-direction:column;gap:8px}
+.wheel-opt{padding:11px 14px;border-radius:10px;border:1.5px solid #e0ecf8;font-size:13px;font-weight:600;cursor:pointer;background:#f7fbff;color:var(--text);text-align:left;width:100%;transition:all .2s}
+.wheel-opt:active{transform:scale(.98)}
+.wheel-opt.correct{border-color:#2D6A4F;background:#EAF7EE;color:#2D6A4F}
+.wheel-opt.wrong{border-color:var(--coral);background:#FEEEEA;color:#C25B3B}
+.wheel-fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:12px;font-weight:600;line-height:1.5;display:none}
+.wheel-fb.show{display:block}
+.wheel-fb.ok{background:#EAF7EE;color:#2D6A4F}
+.wheel-fb.err{background:#FEEEEA;color:#C25B3B}
+.wheel-score-bar{background:#fff;border-radius:12px;padding:12px 16px;display:flex;justify-content:space-between;width:100%;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.wheel-score-item{text-align:center}
+.wheel-score-num{font-size:20px;font-weight:700;color:var(--ocean)}
+.wheel-score-lbl{font-size:10px;color:var(--sub);font-weight:600}
+
+/* ══ OYUN 5: KELİME BULMACA ══ */
+.puzzle-wrap{padding:0 16px}
+.puzzle-desc{background:#EBF5FF;border-radius:10px;padding:10px 12px;font-size:13px;color:var(--ocean);font-weight:600;margin-bottom:14px;line-height:1.5}
+.puzzle-grid{display:inline-grid;gap:3px;margin:0 auto 16px;display:flex;flex-wrap:wrap;justify-content:center}
+.puzzle-table{border-collapse:separate;border-spacing:3px;margin:0 auto 14px}
+.puzzle-cell{width:32px;height:32px;border-radius:6px;background:#fff;border:1.5px solid #d0e4f0;font-size:14px;font-weight:700;text-align:center;vertical-align:middle;cursor:pointer;color:var(--text);transition:all .2s;user-select:none;-webkit-user-select:none}
+.puzzle-cell.highlighted{background:#EBF5FF;border-color:var(--ocean)}
+.puzzle-cell.found{background:linear-gradient(135deg,var(--leaf),var(--mint));color:#fff;border-color:var(--leaf)}
+.puzzle-cell.selecting{background:linear-gradient(135deg,var(--ocean),var(--sky));color:#fff;border-color:var(--ocean)}
+.puzzle-words{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;justify-content:center}
+.puzzle-word{padding:6px 12px;border-radius:20px;background:#fff;border:1.5px solid #e0ecf8;font-size:12px;font-weight:700;color:var(--sub);transition:all .3s}
+.puzzle-word.found{background:#EAF7EE;border-color:var(--leaf);color:var(--leaf);text-decoration:line-through}
+.puzzle-status{text-align:center;font-size:13px;font-weight:700;color:var(--sub);margin-bottom:10px}
+.puzzle-win{background:linear-gradient(135deg,var(--leaf),var(--mint));border-radius:14px;padding:20px;text-align:center;display:none;margin-bottom:14px}
+.puzzle-win.show{display:block}
+.puzzle-win-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:6px}
+.puzzle-win-sub{font-size:13px;color:rgba(255,255,255,.85)}
+
+/* VİDEO */
+.video-hero{background:linear-gradient(135deg,#C25B3B,#E76F51);padding:24px 20px 20px}
+.video-hero-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:#fff;margin-bottom:4px}
+.video-hero-sub{font-size:13px;color:rgba(255,255,255,.75)}
+.video-notice{margin:12px 16px 0;background:#EBF5FF;border-radius:10px;padding:10px 12px;font-size:12px;color:var(--ocean);font-weight:600;line-height:1.5}
+.video-list{display:flex;flex-direction:column;gap:10px;padding:12px 16px}
+.video-item{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.07);cursor:pointer;transition:transform .15s}
+.video-item:active{transform:scale(.98)}
+.video-thumb{width:100%;height:130px;display:flex;align-items:center;justify-content:center;font-size:44px;position:relative;overflow:hidden}
+.vt1{background:linear-gradient(135deg,#03045E,#0077B6)}
+.vt2{background:linear-gradient(135deg,#2D6A4F,#52B788)}
+.vt3{background:linear-gradient(135deg,#C25B3B,#F4A261)}
+.vt4{background:linear-gradient(135deg,#1a1a2e,#0077B6)}
+.vt5{background:linear-gradient(135deg,#6B2D8B,#A855C8)}
+.vt6{background:linear-gradient(135deg,#0F4C75,#1B98E0)}
+.play-btn{position:absolute;width:46px;height:46px;background:rgba(255,255,255,.28);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;border:2px solid rgba(255,255,255,.5)}
+.video-info{padding:10px 14px}
+.video-ttl{font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;line-height:1.3}
+.video-meta{font-size:11px;color:var(--sub);margin-bottom:3px}
+.video-tag{display:inline-block;padding:2px 8px;border-radius:8px;background:#EBF5FF;color:var(--ocean);font-size:10px;font-weight:700}
+.video-open-btn{display:block;margin:6px 14px 12px;padding:9px;background:var(--ocean);color:#fff;border-radius:9px;font-size:12px;font-weight:700;text-align:center;border:none;cursor:pointer;width:calc(100% - 28px)}
+
+/* HESAP */
+.calc-hero{background:linear-gradient(135deg,#C25B3B,#E76F51,#F4A261);padding:24px 20px 20px}
+.calc-hero-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:#fff;margin-bottom:4px}
+.calc-hero-sub{font-size:13px;color:rgba(255,255,255,.75)}
+.calc-wrap{padding:16px}
+.calc-card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,.08);margin-bottom:12px}
+.calc-section-ttl{font-size:13px;font-weight:700;color:var(--sub);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #edf2f7}
+.calc-item{margin-bottom:15px}
+.calc-lbl{font-size:12px;font-weight:700;color:var(--sub);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.calc-lbl span{color:var(--coral);font-size:13px;font-weight:700;min-width:70px;text-align:right}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:5px;background:#dde8f0;border-radius:3px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;background:var(--ocean);border-radius:50%;cursor:pointer;box-shadow:0 2px 6px rgba(0,119,182,.4)}
+.result-card{background:linear-gradient(135deg,var(--coral),var(--amber));border-radius:16px;padding:20px;text-align:center;margin-bottom:12px}
+.result-lbl{font-size:12px;color:rgba(255,255,255,.85);margin-bottom:4px}
+.result-num{font-family:'Playfair Display',serif;font-size:40px;font-weight:900;color:#fff;line-height:1}
+.result-unit{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:12px}
+.result-bar-wrap{background:rgba(255,255,255,.2);border-radius:10px;height:10px;overflow:hidden;margin-bottom:8px}
+.result-bar{height:100%;background:#fff;border-radius:10px;transition:width .6s ease}
+.result-compare{font-size:12px;color:rgba(255,255,255,.95);font-weight:600;margin-bottom:10px}
+.result-breakdown{background:rgba(255,255,255,.15);border-radius:10px;padding:12px;text-align:left}
+.result-breakdown-ttl{font-size:11px;font-weight:700;color:rgba(255,255,255,.8);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
+.rb-row{display:flex;justify-content:space-between;font-size:12px;color:#fff;font-weight:600;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.rb-row:last-child{border:none;font-weight:700;font-size:13px;padding-top:6px}
+.tips-card{background:#fff;border-radius:16px;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.tips-card-ttl{font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #edf2f7}
+.tip-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
+.tip-row:last-child{margin-bottom:0}
+.tip-ico{font-size:18px;flex-shrink:0;margin-top:1px}
+.tip-row-txt{font-size:13px;color:var(--sub);line-height:1.5;font-weight:600}
+.spacer{height:16px}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-drop">💧</div>
+  <div class="splash-title">Su Ayak İzi<br>Dergisi</div>
+  <div class="splash-sub">Her Damla Önemli</div>
+  <div class="splash-bar"><div class="splash-fill"></div></div>
+</div>
+
+<div id="app">
+
+  <!-- ══ ANA SAYFA ══ -->
+  <div class="page show" id="p-home">
+    <div class="home-hero">
+      <div class="hero-wave">〜</div>
+      <div class="hero-logo">
+        <div class="logo-drop"><span>💧</span></div>
+        <div class="logo-text">Su Ayak İzi Dergisi<small>Her Damla Önemli</small></div>
+      </div>
+      <div class="hero-main">Suyun İzini<br>Sür! 🌊</div>
+      <div class="hero-sub">Geleceği korumak için bugün harekete geç</div>
+    </div>
+    <div class="section-ttl">📊 Biliyor muydun?</div>
+    <div class="stat-bar">
+      <div class="stat-col"><div class="stat-n">3.800</div><div class="stat-l">litre/gün kişi başı</div></div>
+      <div class="stat-col"><div class="stat-n">15.400</div><div class="stat-l">litre 1 kg et</div></div>
+      <div class="stat-col"><div class="stat-n">140 L</div><div class="stat-l">tek fincan kahve</div></div>
+      <div class="stat-col"><div class="stat-n">2,7 Mly</div><div class="stat-l">su sıkıntısı çeken</div></div>
+    </div>
+    <div class="section-ttl">📰 Öne Çıkan</div>
+    <div class="feat-card" onclick="goPage('p-bilgi')">
+      <div class="feat-inner">
+        <div class="feat-cat">Temel Kavram</div>
+        <div class="feat-title">Su Ayak İzi Nedir?<br>3 Renk, 3 Anlam</div>
+        <div class="feat-btn">Keşfet →</div>
+      </div>
+    </div>
+    <div class="section-ttl">🌊 Modüller</div>
+    <div class="grid2">
+      <div class="icard blue" onclick="goPage('p-bilgi')"><div class="icard-badge">Temel</div><div class="icard-icon">💧</div><div class="icard-ttl">Mavi Su Ayak İzi</div><div class="icard-sub">Tatlı su tüketimi</div></div>
+      <div class="icard green" onclick="goPage('p-bilgi')"><div class="icard-badge">Bitki</div><div class="icard-icon">🌱</div><div class="icard-ttl">Yeşil Su Ayak İzi</div><div class="icard-sub">Yağmur & toprak</div></div>
+      <div class="icard coral" onclick="goPage('p-bilgi')"><div class="icard-badge">Kirlilik</div><div class="icard-icon">🏭</div><div class="icard-ttl">Gri Su Ayak İzi</div><div class="icard-sub">Kirlenme & arıtma</div></div>
+      <div class="icard navy" onclick="goPage('p-hesap')"><div class="icard-badge">Hesapla</div><div class="icard-icon">🧮</div><div class="icard-ttl">İzimi Hesapla</div><div class="icard-sub">Günlük kullanım</div></div>
+    </div>
+    <div class="section-ttl">💡 Günlük İpuçları</div>
+    <div class="tip-list">
+      <div class="tip-item"><div class="tip-num">1</div><div class="tip-txt">Diş fırçalarken musluğu kapat — dakikada 6 litre tasarruf!</div></div>
+      <div class="tip-item"><div class="tip-num">2</div><div class="tip-txt">Tam dolu çamaşır makinesi kullan — yarım yük yakıtı boşa harcar.</div></div>
+      <div class="tip-item"><div class="tip-num">3</div><div class="tip-txt">Haftada bir gün etsiz beslen → yaklaşık 1.500 litre su tasarrufu!</div></div>
+      <div class="tip-item"><div class="tip-num">4</div><div class="tip-txt">Bahçeyi sabah erken veya akşam sula, güneş buharlaştırmasını önle.</div></div>
+      <div class="tip-item"><div class="tip-num">5</div><div class="tip-txt">Damlayan musluğu hemen tamir et — yılda 11.000 litre kaybı önler.</div></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+
+  <!-- ══ BİLGİ ══ -->
+  <div class="page" id="p-bilgi">
+    <div class="bilgi-hero"><div class="bilgi-hero-title">📚 Su Hakkında Her Şey</div><div class="bilgi-hero-sub">Mavi, Yeşil, Gri — suyun üç yüzü</div></div>
+    <div class="section-ttl">🌈 3 Tür Su Ayak İzi</div>
+    <div class="water-types">
+      <div class="wtype blue-t"><div class="wtype-icon">💧</div><div><div class="wtype-ttl">Mavi Su Ayak İzi</div><div class="wtype-desc">Nehir, göl ve yeraltı tatlı suyunun tüketimini ifade eder. Tarımsal sulama ve sanayi üretiminde kullanılan su bu kategoriye girer.</div><span class="wtype-tag">Tatlı Su Tüketimi</span></div></div>
+      <div class="wtype green-t"><div class="wtype-icon">🌱</div><div><div class="wtype-ttl">Yeşil Su Ayak İzi</div><div class="wtype-desc">Yağmur suyunun bitkiler tarafından kullanılan kısmıdır. Tarım arazilerinde toprağa düşen ve buharlaşan suyu kapsar.</div><span class="wtype-tag">Yağmur Suyu</span></div></div>
+      <div class="wtype gray-t"><div class="wtype-icon">🏭</div><div><div class="wtype-ttl">Gri Su Ayak İzi</div><div class="wtype-desc">Bir ürünün üretimi sırasında kirletilen suyu temizlemek için gereken tatlı su miktarıdır.</div><span class="wtype-tag">Kirlilik Göstergesi</span></div></div>
+    </div>
+    <div class="section-ttl">📖 Bilgi Kartları</div>
+    <div class="accordion" onclick="toggleAcc(this)"><div class="acc-head"><span class="acc-emoji">🥩</span><span class="acc-ttl">Gıdaların Su Ayak İzi</span><span class="acc-arrow">▼</span></div><div class="acc-body"><div class="fact">🥩 1 kg sığır eti = 15.400 L<br>🐔 1 kg tavuk = 4.300 L<br>🐟 1 kg balık = 3.900 L<br>🌾 1 kg buğday = 1.800 L<br>🍚 1 kg pirinç = 2.500 L<br>🍎 1 kg elma = 700 L<br>☕ 1 fincan kahve = 140 L<br>🥛 1 litre süt = 1.020 L</div></div></div>
+    <div class="accordion" onclick="toggleAcc(this)"><div class="acc-head"><span class="acc-emoji">👕</span><span class="acc-ttl">Giysi & Ürünlerin Su Ayak İzi</span><span class="acc-arrow">▼</span></div><div class="acc-body"><div class="fact">👕 1 tişört = 2.700 L<br>👖 1 kot pantolon = 10.000 L<br>👟 1 deri ayakkabı = 8.000 L<br>📱 1 akıllı telefon = 12.760 L<br>🚗 1 otomobil = 400.000 L</div></div></div>
+    <div class="accordion" onclick="toggleAcc(this)"><div class="acc-head"><span class="acc-emoji">🇹🇷</span><span class="acc-ttl">Türkiye'de Su Durumu</span><span class="acc-arrow">▼</span></div><div class="acc-body"><p>Türkiye, kişi başına düşen yıllık 1.346 m³ kullanılabilir su ile "su azlığı" sınırındadır.</p><div class="fact">💧 Kişi başı: ~1.346 m³/yıl<br>🌡️ İklim değişikliği kuraklık riskini artırıyor<br>🏙️ Şehirlerde su kayıpları: %30-40</div></div></div>
+    <div class="spacer"></div>
+  </div>
+
+  <!-- ══ QUIZ ══ -->
+  <div class="page" id="p-quiz">
+    <div class="quiz-hero"><div class="quiz-hero-title">❓ Bilgi Yarışması</div><div class="quiz-hero-sub">Su ayak izi bilgini test et!</div></div>
+    <div class="quiz-wrap"><div class="qprog-bar" id="qprog"></div><div id="quiz-container"></div></div>
+  </div>
+
+  <!-- ══ OYUNLAR ANA MENÜ ══ -->
+  <div class="page" id="p-oyun">
+    <div class="game-hero"><div class="game-hero-title">🎮 Su Oyunları</div><div class="game-hero-sub">5 farklı oyunla eğlenerek öğren!</div></div>
+    <div class="game-menu">
+      <button class="game-card-btn" onclick="showGame('g-match')">
+        <div class="gcb-icon g1">🔗</div>
+        <div class="gcb-info"><div class="gcb-title">Eşleştirme Oyunu</div><div class="gcb-desc">Gıdaları su ayak iziyle eşleştir!</div><span class="gcb-badge badge-easy">⭐ Kolay</span></div>
+        <span class="gcb-arrow">›</span>
+      </button>
+      <button class="game-card-btn" onclick="showGame('g-dy')">
+        <div class="gcb-icon g2">✅</div>
+        <div class="gcb-info"><div class="gcb-title">Doğru / Yanlış</div><div class="gcb-desc">Su gerçeklerini ayır! 10 ifade seni bekliyor.</div><span class="gcb-badge badge-mix">🌟 Karma seviye</span></div>
+        <span class="gcb-arrow">›</span>
+      </button>
+      <button class="game-card-btn" onclick="showGame('g-fill')">
+        <div class="gcb-icon g3">✏️</div>
+        <div class="gcb-info"><div class="gcb-title">Boşluk Doldurma</div><div class="gcb-desc">Eksik kelimeleri bul, cümleleri tamamla!</div><span class="gcb-badge badge-mid">⭐⭐ Orta</span></div>
+        <span class="gcb-arrow">›</span>
+      </button>
+      <button class="game-card-btn" onclick="showGame('g-wheel')">
+        <div class="gcb-icon g4">🎡</div>
+        <div class="gcb-info"><div class="gcb-title">Soru Çarkı</div><div class="gcb-desc">Çarkı çevir, kategori çık, soruyu cevapla!</div><span class="gcb-badge badge-mix">🌟 Karma seviye</span></div>
+        <span class="gcb-arrow">›</span>
+      </button>
+      <button class="game-card-btn" onclick="showGame('g-puzzle')">
+        <div class="gcb-icon g5">🔤</div>
+        <div class="gcb-info"><div class="gcb-title">Kelime Bulmaca</div><div class="gcb-desc">Su terimleri gizlenmiş! Hepsini bul.</div><span class="gcb-badge badge-hard">⭐⭐⭐ Zor</span></div>
+        <span class="gcb-arrow">›</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ══ OYUN 1: EŞLEŞTİRME ══ -->
+  <div class="game-screen" id="g-match">
+    <div class="gs-header">
+      <button class="gs-back" onclick="hideGame('g-match')">←</button>
+      <span class="gs-title">🔗 Eşleştirme Oyunu</span>
+      <span class="gs-score" id="match-score">0/0</span>
+    </div>
+    <div class="gs-body">
+      <div class="match-desc">Sol taraftaki gıdayı sağdaki su miktarıyla eşleştir. Önce soldan, sonra sağdan seç!</div>
+      <div class="match-grid">
+        <div class="match-col"><div class="match-col-ttl">🍽️ Gıda</div><div id="match-left"></div></div>
+        <div class="match-col"><div class="match-col-ttl">💧 Su Miktarı</div><div id="match-right"></div></div>
+      </div>
+      <div class="match-result" id="match-result">
+        <div class="match-result-title">🎉 Tebrikler! Hepsini eşleştirdin!</div>
+        <div class="match-result-sub">Harika iş çıkardın!</div>
+      </div>
+      <button class="game-restart-btn" onclick="initMatch()">🔄 Yeniden Oyna</button>
+    </div>
+  </div>
+
+  <!-- ══ OYUN 2: DOĞRU/YANLIŞ ══ -->
+  <div class="game-screen" id="g-dy">
+    <div class="gs-header">
+      <button class="gs-back" onclick="hideGame('g-dy')">←</button>
+      <span class="gs-title">✅ Doğru / Yanlış</span>
+      <span class="gs-score" id="dy-score">0/0</span>
+    </div>
+    <div class="gs-body">
+      <div class="dy-progress" id="dy-prog"></div>
+      <div id="dy-container"></div>
+    </div>
+  </div>
+
+  <!-- ══ OYUN 3: BOŞLUK DOLDURMA ══ -->
+  <div class="game-screen" id="g-fill">
+    <div class="gs-header">
+      <button class="gs-back" onclick="hideGame('g-fill')">←</button>
+      <span class="gs-title">✏️ Boşluk Doldurma</span>
+      <span class="gs-score" id="fill-score">0/0</span>
+    </div>
+    <div class="gs-body" id="fill-body"></div>
+  </div>
+
+  <!-- ══ OYUN 4: ÇARKIFELEK ══ -->
+  <div class="game-screen" id="g-wheel">
+    <div class="gs-header">
+      <button class="gs-back" onclick="hideGame('g-wheel')">←</button>
+      <span class="gs-title">🎡 Soru Çarkı</span>
+      <span class="gs-score" id="wheel-score-txt">Puan: 0</span>
+    </div>
+    <div class="gs-body">
+      <div class="wheel-score-bar">
+        <div class="wheel-score-item"><div class="wheel-score-num" id="ws-correct">0</div><div class="wheel-score-lbl">Doğru</div></div>
+        <div class="wheel-score-item"><div class="wheel-score-num" id="ws-wrong">0</div><div class="wheel-score-lbl">Yanlış</div></div>
+        <div class="wheel-score-item"><div class="wheel-score-num" id="ws-total">0</div><div class="wheel-score-lbl">Toplam</div></div>
+      </div>
+      <div class="wheel-wrap">
+        <div class="wheel-container">
+          <canvas id="wheelCanvas" width="280" height="280"></canvas>
+          <div class="wheel-pointer"></div>
+        </div>
+        <button class="wheel-spin-btn" id="wheelBtn" onclick="spinWheel()">🎡 Çarkı Çevir!</button>
+        <div class="wheel-question-box" id="wheel-qbox">
+          <div class="wheel-category" id="wheel-cat"></div>
+          <div class="wheel-q" id="wheel-q"></div>
+          <div class="wheel-opts" id="wheel-opts"></div>
+          <div class="wheel-fb" id="wheel-fb"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ OYUN 5: KELİME BULMACA ══ -->
+  <div class="game-screen" id="g-puzzle">
+    <div class="gs-header">
+      <button class="gs-back" onclick="hideGame('g-puzzle')">←</button>
+      <span class="gs-title">🔤 Kelime Bulmaca</span>
+      <span class="gs-score" id="puzzle-score">0/8</span>
+    </div>
+    <div class="gs-body">
+      <div class="puzzle-wrap">
+        <div class="puzzle-desc">Aşağıdaki tabloda su ile ilgili 8 kelime gizlenmiş. Harflere tıklayarak kelimeleri bul! (Yatay veya dikey)</div>
+        <div class="puzzle-status" id="puzzle-status">8 kelime kaldı</div>
+        <div style="overflow-x:auto;text-align:center">
+          <table class="puzzle-table" id="puzzleTable"></table>
+        </div>
+        <div class="puzzle-words" id="puzzle-words"></div>
+        <div class="puzzle-win" id="puzzle-win">
+          <div class="puzzle-win-title">🎉 Tebrikler!</div>
+          <div class="puzzle-win-sub">Tüm kelimeleri buldun! Su bilgin mükemmel!</div>
+        </div>
+        <button class="game-restart-btn" onclick="initPuzzle()">🔄 Yeniden</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ VİDEOLAR ══ -->
+  <div class="page" id="p-video">
+    <div class="video-hero"><div class="video-hero-title">🎬 Video İçerikler</div><div class="video-hero-sub">İzle, öğren, paylaş!</div></div>
+    <div class="video-notice">ℹ️ Videolar YouTube'da açılır. İnternet bağlantısı gereklidir.</div>
+    <div class="video-list">
+      <div class="video-item"><div class="video-thumb vt1"><span>💧</span><div class="play-btn">▶</div></div><div class="video-info"><div class="video-ttl">Su Döngüsü Nasıl Çalışır?</div><div class="video-meta">🎬 Animasyon</div><span class="video-tag">Temel Bilgi</span></div><button class="video-open-btn" onclick="openYT('https://www.youtube.com/results?search_query=su+dongusu+turkce+egitim')">▶ YouTube'da İzle</button></div>
+      <div class="video-item"><div class="video-thumb vt2"><span>🌾</span><div class="play-btn">▶</div></div><div class="video-info"><div class="video-ttl">Su Ayak İzi Nedir?</div><div class="video-meta">🎬 Eğitim</div><span class="video-tag">Su Ayak İzi</span></div><button class="video-open-btn" onclick="openYT('https://www.youtube.com/results?search_query=su+ayak+izi+nedir+turkce')">▶ YouTube'da İzle</button></div>
+      <div class="video-item"><div class="video-thumb vt3"><span>🏠</span><div class="play-btn">▶</div></div><div class="video-info"><div class="video-ttl">Evde Su Tasarrufu</div><div class="video-meta">🎬 Pratik Rehber</div><span class="video-tag">Tasarruf</span></div><button class="video-open-btn" onclick="openYT('https://www.youtube.com/results?search_query=evde+su+tasarrufu+ipuclari')">▶ YouTube'da İzle</button></div>
+      <div class="video-item"><div class="video-thumb vt4"><span>🌍</span><div class="play-btn">▶</div></div><div class="video-info"><div class="video-ttl">Dünyada Su Kıtlığı</div><div class="video-meta">🎬 Belgesel</div><span class="video-tag">Küresel Sorun</span></div><button class="video-open-btn" onclick="openYT('https://www.youtube.com/results?search_query=dunya+su+kitligi+belgesel+turkce')">▶ YouTube'da İzle</button></div>
+    </div>
+  </div>
+
+  <!-- ══ HESAP ══ -->
+  <div class="page" id="p-hesap">
+    <div class="calc-hero"><div class="calc-hero-title">🧮 Su Ayak İzim</div><div class="calc-hero-sub">Günlük su tüketimini hesapla</div></div>
+    <div class="calc-wrap">
+      <div class="calc-card">
+        <div class="calc-section-ttl">🚿 Banyo & Kişisel Bakım</div>
+        <div class="calc-item"><div class="calc-lbl">Duş süresi<span id="lv1">8 dk</span></div><input type="range" min="1" max="30" value="8" id="s1" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Tuvalet kullanımı (günde)<span id="lv2">5 kez</span></div><input type="range" min="1" max="12" value="5" id="s2" oninput="updateCalc()" step="1"></div>
+      </div>
+      <div class="calc-card">
+        <div class="calc-section-ttl">🍽️ Mutfak</div>
+        <div class="calc-item"><div class="calc-lbl">Bulaşık makinesi (haftada)<span id="lv3">3 kez</span></div><input type="range" min="0" max="14" value="3" id="s3" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Çay (günde)<span id="lv4">3 bardak</span></div><input type="range" min="0" max="15" value="3" id="s4" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Kahve (günde)<span id="lv5">1 fincan</span></div><input type="range" min="0" max="6" value="1" id="s5" oninput="updateCalc()" step="1"></div>
+      </div>
+      <div class="calc-card">
+        <div class="calc-section-ttl">🏠 Ev & Temizlik</div>
+        <div class="calc-item"><div class="calc-lbl">Çamaşır makinesi (haftada)<span id="lv6">2 kez</span></div><input type="range" min="0" max="14" value="2" id="s6" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Bahçe/balkon sulama (haftada)<span id="lv7">2 kez</span></div><input type="range" min="0" max="14" value="2" id="s7" oninput="updateCalc()" step="1"></div>
+      </div>
+      <div class="calc-card">
+        <div class="calc-section-ttl">🥗 Beslenme</div>
+        <div class="calc-item"><div class="calc-lbl">Kırmızı et (haftada porsiyon)<span id="lv8">3 porsiyon</span></div><input type="range" min="0" max="14" value="3" id="s8" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Tavuk (haftada porsiyon)<span id="lv9">4 porsiyon</span></div><input type="range" min="0" max="14" value="4" id="s9" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Süt/süt ürünleri (günde)<span id="lv10">2 porsiyon</span></div><input type="range" min="0" max="8" value="2" id="s10" oninput="updateCalc()" step="1"></div>
+      </div>
+      <div class="calc-card">
+        <div class="calc-section-ttl">👕 Giyim & Alışveriş</div>
+        <div class="calc-item"><div class="calc-lbl">Kıyafet alımı (ayda adet)<span id="lv11">2 adet</span></div><input type="range" min="0" max="20" value="2" id="s11" oninput="updateCalc()" step="1"></div>
+      </div>
+      <div class="result-card">
+        <div class="result-lbl">Tahmini Günlük Su Ayak İzin</div>
+        <div class="result-num" id="resNum">4.200</div>
+        <div class="result-unit">litre / gün</div>
+        <div class="result-bar-wrap"><div class="result-bar" id="resBar" style="width:55%"></div></div>
+        <div class="result-compare" id="resCompare"></div>
+        <div class="result-breakdown" id="resBreakdown"></div>
+      </div>
+      <div class="tips-card"><div class="tips-card-ttl">💡 Sana Özel Öneriler</div><div id="tipsList"></div></div>
+    </div>
+  </div>
+
+  <nav class="bnav">
+    <button class="bnav-btn act" onclick="goPage('p-home',this)"><span class="bnav-icon">🏠</span><span class="bnav-lbl">Ana Sayfa</span></button>
+    <button class="bnav-btn" onclick="goPage('p-bilgi',this)"><span class="bnav-icon">📚</span><span class="bnav-lbl">Bilgi</span></button>
+    <button class="bnav-btn" onclick="goPage('p-quiz',this)"><span class="bnav-icon">❓</span><span class="bnav-lbl">Quiz</span></button>
+    <button class="bnav-btn" onclick="goPage('p-oyun',this)"><span class="bnav-icon">🎮</span><span class="bnav-lbl">Oyunlar</span></button>
+    <button class="bnav-btn" onclick="goPage('p-video',this)"><span class="bnav-icon">🎬</span><span class="bnav-lbl">Videolar</span></button>
+    <button class="bnav-btn" onclick="goPage('p-hesap',this)"><span class="bnav-icon">🧮</span><span class="bnav-lbl">Hesapla</span></button>
+  </nav>
+</div>
+
+<script>
+// SPLASH
+setTimeout(()=>{
+  document.getElementById('splash').classList.add('hide');
+  document.getElementById('app').classList.add('show');
+  renderQuiz(); initMatch(); initDY(); initFill(); initWheel(); initPuzzle(); updateCalc();
+},2400);
+
+// NAV
+function goPage(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));
+  document.querySelectorAll('.game-screen').forEach(g=>g.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+  document.getElementById(id).scrollTop=0;
+  if(btn){document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('act'));btn.classList.add('act');}
+}
+function showGame(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));
+  document.querySelectorAll('.game-screen').forEach(g=>g.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+  document.getElementById(id).scrollTop=0;
+}
+function hideGame(id){
+  document.getElementById(id).classList.remove('show');
+  document.getElementById('p-oyun').classList.add('show');
+}
+function toggleAcc(el){
+  const b=el.querySelector('.acc-body'),a=el.querySelector('.acc-arrow');
+  b.classList.toggle('open');
+  a.style.transform=b.classList.contains('open')?'rotate(180deg)':'';
+}
+function openYT(url){window.open(url,'_blank');}
+
+// ══ QUIZ ══
+const Qs=[
+  {q:"Bir kilo sığır etinin su ayak izi yaklaşık kaçtır?",opts:["1.500 L","3.800 L","7.500 L","15.400 L"],a:3,info:"🥩 1 kg sığır eti için ~15.400 litre su harcanır!"},
+  {q:"Mavi su ayak izi neyi ifade eder?",opts:["Yağmur suyunu","Kirletilen suyu","Tatlı su tüketimini","Deniz suyunu"],a:2,info:"💧 Nehir, göl ve yeraltı sularının tüketimini ölçer."},
+  {q:"Bir fincan kahve için kaç litre su kullanılır?",opts:["10 L","50 L","140 L","300 L"],a:2,info:"☕ Tek fincan kahve için 140 litre su harcanır!"},
+  {q:"Dünyada kaç kişi su sıkıntısı yaşar?",opts:["500 milyon","1 milyar","2,7 milyar","5 milyar"],a:2,info:"🌍 2,7 milyar insan yılın en az bir ayı su sıkıntısıyla geçirir."},
+  {q:"Bir kot pantolon için ne kadar su gerekir?",opts:["500 L","2.000 L","5.000 L","10.000 L"],a:3,info:"👖 Bir kot pantolon yaklaşık 10.000 litre su harcar."},
+  {q:"Gri su ayak izi neyi ölçer?",opts:["İçme suyunu","Kirletilen suyu arıtmak için gereken suyu","Yağmur suyunu","Endüstriyel suyu"],a:1,info:"🏭 Kirletilen suyu temizlemek için gereken tatlı su miktarıdır."},
+  {q:"Türkiye kişi başı yıllık ne kadar kullanılabilir suya sahip?",opts:["500 m³","1.346 m³","3.000 m³","8.000 m³"],a:1,info:"🇹🇷 Türkiye ~1.346 m³/kişi ile su azlığı sınırındadır."},
+  {q:"Dünya tatlı suyunun kaçı tarımda kullanılır?",opts:["%10","%30","%50","%70"],a:3,info:"🌾 Tatlı suyun yaklaşık %70'i tarımsal sulama için kullanılır."}
+];
+let qIdx=0,qScore=0,qAnswered=false;
+function renderQuiz(){
+  document.getElementById('qprog').innerHTML=Qs.map((_,i)=>`<div class="qp ${i<qIdx?'done':i===qIdx?'cur':''}"></div>`).join('');
+  const c=document.getElementById('quiz-container');
+  if(qIdx>=Qs.length){
+    let msg=qScore<=3?'Biraz daha çalış! 📖':qScore<=5?'İyi gidiyorsun! 👍':qScore<=7?'Harika! 🌟':'Uzman! 🏆';
+    c.innerHTML=`<div class="qscore"><div class="qscore-trophy">${qScore>=7?'🏆':qScore>=5?'🌟':'💧'}</div><div class="qscore-title">${msg}</div><div class="qscore-pts">${qScore}/${Qs.length}</div><div class="qscore-sub">doğru cevap</div><button class="qscore-btn" onclick="qIdx=0;qScore=0;renderQuiz()">Tekrar ↩</button></div>`;
+    return;
+  }
+  const Q=Qs[qIdx];
+  c.innerHTML=`<div class="qcard"><div class="qcard-num">Soru ${qIdx+1}/${Qs.length}</div><div class="qcard-q">${Q.q}</div><div class="qopts">${Q.opts.map((o,i)=>`<button class="qopt" onclick="pickQ(${i})">${o}</button>`).join('')}</div><div class="qfb" id="qfb"></div><button class="qnext" id="qnxt" onclick="qIdx++;renderQuiz()">Sonraki →</button></div>`;
+  qAnswered=false;
+}
+function pickQ(i){
+  if(qAnswered)return; qAnswered=true;
+  const Q=Qs[qIdx];
+  document.querySelectorAll('.qopt').forEach((el,idx)=>{if(idx===Q.a)el.classList.add('correct');else if(idx===i&&i!==Q.a)el.classList.add('wrong');});
+  const fb=document.getElementById('qfb'); fb.textContent=Q.info; fb.className='qfb show '+(i===Q.a?'ok':'err');
+  if(i===Q.a)qScore++;
+  document.getElementById('qnxt').className='qnext show';
+}
+
+// ══ OYUN 1: EŞLEŞTİRME ══
+const matchData=[
+  {food:'🥩 Sığır eti (1kg)',water:'15.400 L'},
+  {food:'👖 Kot pantolon',water:'10.000 L'},
+  {food:'☕ Kahve (1 fincan)',water:'140 L'},
+  {food:'🌾 Buğday (1kg)',water:'1.800 L'},
+  {food:'🐔 Tavuk (1kg)',water:'4.300 L'},
+  {food:'🍎 Elma (1kg)',water:'700 L'},
+];
+let matchSelected=null,matchDone=0;
+function initMatch(){
+  matchSelected=null; matchDone=0;
+  document.getElementById('match-score').textContent='0/'+matchData.length;
+  document.getElementById('match-result').className='match-result';
+  const shuffledFoods=[...matchData].sort(()=>Math.random()-.5);
+  const shuffledWater=[...matchData].sort(()=>Math.random()-.5);
+  document.getElementById('match-left').innerHTML=shuffledFoods.map((d,i)=>`<div class="match-item" data-food="${d.food}" data-water="${d.water}" onclick="selectMatch(this,'left')">${d.food}</div>`).join('');
+  document.getElementById('match-right').innerHTML=shuffledWater.map((d,i)=>`<div class="match-item" data-water="${d.water}" onclick="selectMatch(this,'right')">${d.water}</div>`).join('');
+}
+function selectMatch(el,side){
+  if(el.classList.contains('matched'))return;
+  if(matchSelected&&matchSelected.side===side){
+    document.querySelectorAll('.match-item.selected').forEach(e=>e.classList.remove('selected'));
+    matchSelected=null;
+  }
+  if(!matchSelected){
+    el.classList.add('selected'); matchSelected={el,side,food:el.dataset.food,water:el.dataset.water}; return;
+  }
+  if(matchSelected.side===side){el.classList.add('selected');matchSelected={el,side,food:el.dataset.food,water:el.dataset.water};return;}
+  const leftWater=side==='right'?matchSelected.water:el.dataset.water;
+  const rightWater=side==='right'?el.dataset.water:matchSelected.water;
+  if(leftWater===rightWater){
+    [matchSelected.el,el].forEach(e=>{e.classList.remove('selected');e.classList.add('matched');});
+    matchDone++;
+    document.getElementById('match-score').textContent=matchDone+'/'+matchData.length;
+    if(matchDone===matchData.length)document.getElementById('match-result').className='match-result show';
+  } else {
+    [matchSelected.el,el].forEach(e=>{e.classList.add('wrong-flash');setTimeout(()=>e.classList.remove('wrong-flash','selected'),500);});
+  }
+  matchSelected=null;
+}
+
+// ══ OYUN 2: DOĞRU/YANLIŞ ══
+const dyData=[
+  {stmt:"1 kg sığır eti üretmek için yaklaşık 15.400 litre su harcanır.",ans:true,level:'easy',info:"✅ Doğru! Bu, bir kişinin 42 günlük içme suyuna eşittir."},
+  {stmt:"Mavi su ayak izi, kirletilen suyu ifade eder.",ans:false,level:'easy',info:"❌ Yanlış! Mavi su ayak izi, yüzey ve yeraltı tatlı sularının tüketimini ölçer. Kirlilik 'gri' su ayak izidir."},
+  {stmt:"Dünya tatlı suyunun %70'i tarımsal sulama için kullanılır.",ans:true,level:'easy',info:"✅ Doğru! Tarım, dünyanın en büyük su tüketicisidir."},
+  {stmt:"Bir fincan çay, bir fincan kahveden daha fazla su ayak izine sahiptir.",ans:false,level:'mid',info:"❌ Yanlış! Kahve (140 L) çaydan (35 L) çok daha fazla su harcar."},
+  {stmt:"Türkiye, kişi başına düşen su miktarı açısından 'su zengini' ülkeler arasındadır.",ans:false,level:'mid',info:"❌ Yanlış! Türkiye kişi başı ~1.346 m³ ile 'su azlığı' sınırındadır."},
+  {stmt:"Yeşil su ayak izi, yağmur suyunun bitkilerce kullanılan kısmını ifade eder.",ans:true,level:'mid',info:"✅ Doğru! Yeşil su, yağmur kaynaklı toprak nemini kapsar."},
+  {stmt:"Damlayan bir musluk günde yalnızca 1-2 litre su kaybettirir.",ans:false,level:'hard',info:"❌ Yanlış! Damlayan bir musluk günde 15-20 litre, yılda yaklaşık 5.500 litre su kaybına yol açar."},
+  {stmt:"Bir kot pantolon üretmek için yaklaşık 10.000 litre su harcanır.",ans:true,level:'hard',info:"✅ Doğru! Pamuk tarlasiyle başlayan süreç boyama ve işlemeyle tamamlanır."},
+  {stmt:"Sulak alanlar, son 50 yılda dünya genelinde yarıya inmiştir.",ans:false,level:'hard',info:"❌ Yanlış ama yakın! Sulak alanların yaklaşık %35'i yok oldu, %50'si değil."},
+  {stmt:"Kısa duş almak, banyo yapmaktan genellikle daha az su harcar.",ans:true,level:'easy',info:"✅ Doğru! Bir küvet dolusu banyo ~150 L, kısa duş ise 40-60 L su harcar."},
+];
+let dyIdx=0,dyScore=0,dyAnswered=false;
+function initDY(){dyIdx=0;dyScore=0;dyAnswered=false;renderDY();}
+function renderDY(){
+  document.getElementById('dy-prog').innerHTML=dyData.map((_,i)=>`<div class="dy-p ${i<dyIdx?'done':i===dyIdx?'cur':''}"></div>`).join('');
+  document.getElementById('dy-score').textContent=dyScore+'/'+dyData.length;
+  const c=document.getElementById('dy-container');
+  if(dyIdx>=dyData.length){
+    let msg=dyScore<=4?'Daha çok çalış! 📖':dyScore<=7?'Güzel iş! 👍':'Mükemmel! 🏆';
+    c.innerHTML=`<div class="qscore"><div class="qscore-trophy">${dyScore>=8?'🏆':dyScore>=5?'🌟':'💧'}</div><div class="qscore-title">${msg}</div><div class="qscore-pts">${dyScore}/${dyData.length}</div><div class="qscore-sub">doğru cevap</div><button class="qscore-btn" onclick="initDY()">Tekrar ↩</button></div>`;
+    return;
+  }
+  const D=dyData[dyIdx];
+  const lvlMap={easy:'✅ Kolay',mid:'⭐ Orta',hard:'🔥 Zor'};
+  c.innerHTML=`<div class="dy-card"><div class="dy-level ${D.level}">${lvlMap[D.level]}</div><div class="dy-stmt">${D.stmt}</div><div class="dy-btns"><button class="dy-btn true-btn" id="btn-true" onclick="pickDY(true)">✅ Doğru</button><button class="dy-btn false-btn" id="btn-false" onclick="pickDY(false)">❌ Yanlış</button></div><div class="dy-feedback" id="dy-fb"></div><button class="dy-next" id="dy-nxt" onclick="dyIdx++;renderDY()">Sonraki →</button></div>`;
+  dyAnswered=false;
+}
+function pickDY(val){
+  if(dyAnswered)return; dyAnswered=true;
+  const D=dyData[dyIdx]; const correct=val===D.ans;
+  if(correct){document.getElementById(val?'btn-true':'btn-false').classList.add('correct-answer');dyScore++;}
+  else{document.getElementById(val?'btn-true':'btn-false').classList.add('wrong-answer');document.getElementById(D.ans?'btn-true':'btn-false').classList.add('correct-answer');}
+  const fb=document.getElementById('dy-fb'); fb.textContent=D.info; fb.className='dy-feedback show '+(correct?'ok':'err');
+  document.getElementById('dy-nxt').className='dy-next show';
+  document.getElementById('dy-score').textContent=dyScore+'/'+dyData.length;
+}
+
+// ══ OYUN 3: BOŞLUK DOLDURMA ══
+const fillData=[
+  {level:'easy',before:'Bir fincan kahve üretmek için yaklaşık',blank:'',after:'litre su harcanır.',answer:'140',opts:['35','140','500','1.000'],info:'☕ Kahve çekirdeklerini yetiştirmek ve işlemek çok su harcar!'},
+  {level:'easy',before:'Su ayak izinin',blank:'',after:'rengi vardır: Mavi, Yeşil ve Gri.',answer:'3',opts:['2','3','4','5'],info:'🌈 Mavi=tüketim, Yeşil=yağmur, Gri=kirlilik'},
+  {level:'mid',before:'1 kg sığır eti üretmek için yaklaşık',blank:'',after:'litre su gerekmektedir.',answer:'15.400',opts:['3.800','8.000','15.400','25.000'],info:'🥩 Yem bitkileri yetiştirmek, sulamak ve işlemek çok su harcar.'},
+  {level:'mid',before:'Dünya tatlı suyunun yaklaşık',blank:'',after:"'i tarımsal sulama için kullanılır.",answer:'%70',opts:['%20','%40','%70','%90'],info:'🌾 Tarım en büyük su tüketicisidir.'},
+  {level:'mid',before:'Yeşil su ayak izi,',blank:'',after:'suyunun bitkilerce kullanılan kısmını ifade eder.',answer:'yağmur',opts:['nehir','yeraltı','yağmur','deniz'],info:'🌧️ Yağmur suyu toprağa işleyip bitkiler tarafından kullanılır.'},
+  {level:'hard',before:'Türkiye kişi başına düşen yıllık',blank:'',after:"m³ kullanılabilir su ile 'su azlığı' sınırındadır.",answer:'1.346',opts:['500','1.346','3.000','8.000'],info:'🇹🇷 Türkiye su zengini değil, dikkatli kullanmak şart!'},
+  {level:'hard',before:'Gri su ayak izi; üretim sürecinde kirletilen suyu',blank:'',after:'getirmek için gereken tatlı su miktarıdır.',answer:'kabul edilebilir düzeye',opts:['denize','yer altına','kabul edilebilir düzeye','buharlaşmaya'],info:'🏭 Kirlilik seyreltilebilir ama bunun için temiz su gerekir.'},
+  {level:'hard',before:'Bir kot pantolon üretmek için yaklaşık',blank:'',after:'litre su harcanır.',answer:'10.000',opts:['2.700','5.000','10.000','20.000'],info:'👖 Pamuk tarlasiyle başlayan süreç boyama ve işlemeyle sona erer.'},
+];
+let fillIdx=0,fillScore=0,fillSelected=null;
+function initFill(){fillIdx=0;fillScore=0;fillSelected=null;renderFill();}
+function renderFill(){
+  document.getElementById('fill-score').textContent=fillScore+'/'+fillData.length;
+  const b=document.getElementById('fill-body');
+  if(fillIdx>=fillData.length){
+    let msg=fillIdx<=3?'Daha çok çalış! 📖':fillScore<=5?'Güzel iş! 👍':'Harika! 🏆';
+    b.innerHTML=`<div class="qscore"><div class="qscore-trophy">${fillScore>=7?'🏆':fillScore>=5?'🌟':'💧'}</div><div class="qscore-title">${msg}</div><div class="qscore-pts">${fillScore}/${fillData.length}</div><div class="qscore-sub">doğru cevap</div><button class="qscore-btn" onclick="initFill()">Tekrar ↩</button></div>`;
+    return;
+  }
+  const F=fillData[fillIdx];
+  const lvlMap={easy:'✅ Kolay',mid:'⭐ Orta',hard:'🔥 Zor'};
+  const shuffledOpts=[...F.opts].sort(()=>Math.random()-.5);
+  fillSelected=null;
+  b.innerHTML=`<div class="fill-card">
+    <div class="fill-level ${F.level}">${lvlMap[F.level]} • Soru ${fillIdx+1}/${fillData.length}</div>
+    <div class="fill-stmt">${F.before} <span class="fill-blank" id="fill-blank-slot">___</span> ${F.after}</div>
+    <div class="fill-opts">${shuffledOpts.map(o=>`<button class="fill-opt" onclick="pickFill(this,'${o}')">${o}</button>`).join('')}</div>
+    <div class="fill-feedback" id="fill-fb"></div>
+    <button class="fill-next" id="fill-nxt" onclick="fillIdx++;renderFill()">Sonraki →</button>
+  </div>`;
+}
+function pickFill(el,val){
+  if(document.getElementById('fill-nxt').className.includes('show'))return;
+  const F=fillData[fillIdx];
+  document.getElementById('fill-blank-slot').textContent=val;
+  document.querySelectorAll('.fill-opt').forEach(e=>e.classList.remove('wrong-sel'));
+  const correct=val===F.answer;
+  if(correct){el.style.borderColor='#2D6A4F';el.style.background='#EAF7EE';el.style.color='#2D6A4F';fillScore++;}
+  else{el.classList.add('wrong-sel');document.querySelectorAll('.fill-opt').forEach(e=>{if(e.textContent===F.answer){e.style.borderColor='#2D6A4F';e.style.background='#EAF7EE';e.style.color='#2D6A4F';}});}
+  const fb=document.getElementById('fill-fb'); fb.textContent=F.info; fb.className='fill-feedback show '+(correct?'ok':'err');
+  document.getElementById('fill-nxt').className='fill-next show';
+  document.getElementById('fill-score').textContent=fillScore+'/'+fillData.length;
+}
+
+// ══ OYUN 4: ÇARKIFELEK ══
+const wheelCategories=[
+  {label:'Gıda\n💧',color:'#0077B6',light:'#90E0EF'},
+  {label:'Ev\n🏠',color:'#2D6A4F',light:'#b7e4c7'},
+  {label:'Giysi\n👕',color:'#E76F51',light:'#ffd7cc'},
+  {label:'Doğa\n🌍',color:'#6B2D8B',light:'#e4b8f7'},
+  {label:'Sayı\n🔢',color:'#0F4C75',light:'#bde0fa'},
+  {label:'Türkiye\n🇹🇷',color:'#856404',light:'#fff3cd'},
+];
+const wheelQs={
+  'Gıda':[
+    {q:"Hangi gıdanın su ayak izi en yüksektir?",opts:["Tavuk","Pirinç","Sığır eti","Buğday"],a:2,info:"🥩 Sığır eti 1 kg için 15.400 L ile zirvede!"},
+    {q:"1 litre süt kaç litre su harcatır?",opts:["100 L","500 L","1.020 L","3.000 L"],a:2,info:"🥛 1 litre süt için yaklaşık 1.020 litre su gerekir."},
+    {q:"En az su ayak izine sahip gıda hangisi?",opts:["Kahve","Çay","Elma","Tavuk"],a:1,info:"🍵 Bir fincan çay yalnızca ~35 litre su harcar."},
+  ],
+  'Ev':[
+    {q:"Diş fırçalarken musluk açık bırakılırsa dakikada ne kadar su boşa gider?",opts:["1 L","6 L","15 L","30 L"],a:1,info:"🚿 Dakikada 6 litre! 2 dakikada 12 litre tasarruf mümkün."},
+    {q:"Küvet banyosu yaklaşık kaç litre su harcar?",opts:["30 L","80 L","150 L","300 L"],a:2,info:"🛁 Bir küvet dolusu banyo ortalama 150 litre su harcar."},
+    {q:"Hangi alışkanlık en fazla su tasarrufu sağlar?",opts:["Kısa duş","Tam dolu makine","Musluğu kapatmak","Hepsi eşit"],a:1,info:"🌟 Tam dolu makine kullanmak en büyük tasarrufu sağlar!"},
+  ],
+  'Giysi':[
+    {q:"Bir pamuklu tişört kaç litre su harcar?",opts:["500 L","1.200 L","2.700 L","8.000 L"],a:2,info:"👕 Pamuk tarlasiyle birlikte bir tişört 2.700 L su harcar."},
+    {q:"Hangi ürün en yüksek su ayak izine sahiptir?",opts:["Tişört","Kot pantolon","Ayakkabı","Çorap"],a:1,info:"👖 Kot pantolon ~10.000 L ile listede üst sırada!"},
+    {q:"Giysi satın almak yerine ne yapmak su tasarrufu sağlar?",opts:["Çok sık yıkamak","İkinci el almak","Hızlı moda takip etmek","Renkli seçmek"],a:1,info:"♻️ İkinci el giysi hem para hem su tasarrufu!"},
+  ],
+  'Doğa':[
+    {q:"Son 50 yılda sulak alanların ne kadarı yok oldu?",opts:["%10","%20","%35","%60"],a:2,info:"🌿 Sulak alanların yaklaşık %35'i yok oldu."},
+    {q:"Yeşil su ayak izi ne anlama gelir?",opts:["Deniz suyu","Yağmur suyunun bitkilerce kullanımı","Fabrika atıksuyu","Temizlenmiş su"],a:1,info:"🌧️ Yağmur suyunun bitkiler tarafından kullanılan kısmıdır."},
+    {q:"İklim değişikliği su kaynaklarını nasıl etkiler?",opts:["Artırır","Değiştirmez","Kuraklık riskini artırır","Sadece denizleri etkiler"],a:2,info:"🌡️ İklim değişikliği hem kuraklık hem ani sel riskini artırır."},
+  ],
+  'Sayı':[
+    {q:"Dünya nüfusunun yaklaşık yüzde kaçı su sıkıntısı yaşıyor?",opts:["%5","%15","%35","%50"],a:2,info:"🌍 %35 — yaklaşık 2,7 milyar insan su sıkıntısıyla karşılaşıyor."},
+    {q:"Kişi başına düşen yıllık su miktarı kaç m³'ün altında ise 'su azlığı' sayılır?",opts:["500 m³","1.000 m³","1.700 m³","5.000 m³"],a:2,info:"📊 1.700 m³/kişi/yıl altı 'su azlığı', 1.000 altı 'mutlak su kıtlığı' olarak tanımlanır."},
+    {q:"1 kg pirinç kaç litre su harcar?",opts:["500 L","1.000 L","2.500 L","5.000 L"],a:2,info:"🍚 1 kg pirinç yaklaşık 2.500 litre su harcar."},
+  ],
+  'Türkiye':[
+    {q:"Türkiye'de kişi başına düşen yıllık kullanılabilir su miktarı nedir?",opts:["500 m³","1.346 m³","4.000 m³","10.000 m³"],a:1,info:"🇹🇷 1.346 m³ ile su azlığı sınırındayız."},
+    {q:"Türkiye'de şehirlerdeki su altyapı kayıpları yaklaşık ne kadardır?",opts:["%5","%15","%35","%60"],a:2,info:"🏙️ Türkiye'de su şebekesi kayıpları ortalama %30-40 civarındadır."},
+    {q:"Türkiye'nin yıllık kullanılabilir su potansiyeli ne kadardır?",opts:["10 milyar m³","50 milyar m³","112 milyar m³","500 milyar m³"],a:2,info:"💧 Türkiye'nin toplam kullanılabilir su potansiyeli yaklaşık 112 milyar m³'tür."},
+  ],
+};
+let wheelSpinning=false,wheelAngle=0,wheelCorrect=0,wheelWrong=0,wheelTotal=0;
+function initWheel(){
+  wheelSpinning=false;wheelAngle=0;wheelCorrect=0;wheelWrong=0;wheelTotal=0;
+  document.getElementById('ws-correct').textContent='0';
+  document.getElementById('ws-wrong').textContent='0';
+  document.getElementById('ws-total').textContent='0';
+  document.getElementById('wheel-score-txt').textContent='Puan: 0';
+  document.getElementById('wheel-qbox').className='wheel-question-box';
+  drawWheel(0);
+}
+function drawWheel(angle){
+  const canvas=document.getElementById('wheelCanvas');
+  const ctx=canvas.getContext('2d');
+  const cx=140,cy=140,r=130,n=wheelCategories.length;
+  ctx.clearRect(0,0,280,280);
+  wheelCategories.forEach((cat,i)=>{
+    const start=angle+i*(2*Math.PI/n)-Math.PI/2;
+    const end=start+(2*Math.PI/n);
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,start,end); ctx.closePath();
+    ctx.fillStyle=i%2===0?cat.color:cat.light; ctx.fill();
+    ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+    ctx.save(); ctx.translate(cx,cy); ctx.rotate(start+(Math.PI/n));
+    ctx.fillStyle=i%2===0?'#fff':cat.color;
+    ctx.font='bold 11px Nunito,sans-serif'; ctx.textAlign='center';
+    const lines=cat.label.split('\n');
+    lines.forEach((l,li)=>{ctx.fillText(l,r*0.6,li*14-6);});
+    ctx.restore();
+  });
+  ctx.beginPath(); ctx.arc(cx,cy,20,0,2*Math.PI);
+  ctx.fillStyle='#fff'; ctx.fill(); ctx.strokeStyle='#e0ecf8'; ctx.lineWidth=2; ctx.stroke();
+  ctx.fillStyle=wheelCategories[0].color; ctx.font='bold 14px Nunito,sans-serif';
+  ctx.textAlign='center'; ctx.fillText('GO',cx,cy+5);
+}
+function spinWheel(){
+  if(wheelSpinning)return;
+  wheelSpinning=true;
+  document.getElementById('wheelBtn').disabled=true;
+  document.getElementById('wheel-qbox').className='wheel-question-box';
+  const extraSpins=5+Math.floor(Math.random()*5);
+  const targetAngle=wheelAngle+extraSpins*2*Math.PI+Math.random()*2*Math.PI;
+  const duration=3000, start=performance.now(), startAngle=wheelAngle;
+  function animate(now){
+    const elapsed=now-start, t=Math.min(elapsed/duration,1);
+    const ease=1-Math.pow(1-t,4);
+    wheelAngle=startAngle+ease*(targetAngle-startAngle);
+    drawWheel(wheelAngle);
+    if(t<1){requestAnimationFrame(animate);}
+    else{wheelAngle=targetAngle%(2*Math.PI);drawWheel(wheelAngle);wheelSpinning=false;showWheelQ();}
+  }
+  requestAnimationFrame(animate);
+}
+function showWheelQ(){
+  const n=wheelCategories.length;
+  const sectorSize=2*Math.PI/n;
+  const pointerAngle=(-wheelAngle+Math.PI/2+Math.PI*2)%(Math.PI*2);
+  const idx=Math.floor(pointerAngle/sectorSize)%n;
+  const cat=wheelCategories[idx];
+  const qs=wheelQs[cat.label.split('\n')[0]];
+  const Q=qs[Math.floor(Math.random()*qs.length)];
+  const box=document.getElementById('wheel-qbox');
+  box.className='wheel-question-box show';
+  document.getElementById('wheel-cat').textContent=cat.label.replace('\n',' ');
+  document.getElementById('wheel-cat').style.color=cat.color;
+  document.getElementById('wheel-q').textContent=Q.q;
+  document.getElementById('wheel-opts').innerHTML=Q.opts.map((o,i)=>`<button class="wheel-opt" onclick="pickWheel(${i},${Q.a},'${Q.info.replace(/'/g,"\\'")}',this)">${o}</button>`).join('');
+  document.getElementById('wheel-fb').className='wheel-fb';
+}
+function pickWheel(i,a,info,el){
+  if(document.getElementById('wheel-fb').className.includes('show'))return;
+  wheelTotal++;
+  const correct=i===a;
+  document.querySelectorAll('.wheel-opt').forEach((o,idx)=>{if(idx===a)o.classList.add('correct');else if(idx===i&&i!==a)o.classList.add('wrong');});
+  const fb=document.getElementById('wheel-fb'); fb.textContent=info; fb.className='wheel-fb show '+(correct?'ok':'err');
+  if(correct)wheelCorrect++;else wheelWrong++;
+  document.getElementById('ws-correct').textContent=wheelCorrect;
+  document.getElementById('ws-wrong').textContent=wheelWrong;
+  document.getElementById('ws-total').textContent=wheelTotal;
+  document.getElementById('wheel-score-txt').textContent='Puan: '+wheelCorrect;
+  setTimeout(()=>{document.getElementById('wheelBtn').disabled=false;},1200);
+}
+
+// ══ OYUN 5: KELİME BULMACA ══
+const puzzleWords=['SULAMA','TASARRUF','KURALIK','TARIM','KIRLILIIK','NEHIR','YAGMUR','BULMACA'];
+const puzzleWordsClean=['SULAMA','TASARRUF','KURALIK','TARIM','KIRLILIK','NEHIR','YAGMUR','IZGARA'];
+const puzzleWordsTR=['SULAMA','TASARRUF','KURALIK','TARIM','KIRLILIK','NEHIR','YAGMUR','HAVZA'];
+const GRID_SIZE=10;
+let puzzleGrid=[],puzzlePlaced=[],puzzleFound=[],puzzleSelecting=[],puzzleFoundCells=[];
+
+function initPuzzle(){
+  puzzleFound=[];puzzleSelecting=[];puzzleFoundCells=[];
+  const words=['SULAMA','TASARRUF','KURALIK','TARIM','KIRLILIK','NEHIR','YAGMUR','HAVZA'];
+  puzzleGrid=Array.from({length:GRID_SIZE},()=>Array(GRID_SIZE).fill(''));
+  puzzlePlaced=[];
+  words.forEach(w=>{
+    let placed=false,tries=0;
+    while(!placed&&tries<200){
+      tries++;
+      const dir=Math.random()<0.5?'H':'V';
+      const maxR=dir==='H'?GRID_SIZE:GRID_SIZE-w.length;
+      const maxC=dir==='H'?GRID_SIZE-w.length:GRID_SIZE;
+      const r=Math.floor(Math.random()*maxR);
+      const c=Math.floor(Math.random()*maxC);
+      let ok=true;
+      for(let i=0;i<w.length;i++){
+        const rr=dir==='H'?r:r+i, cc=dir==='H'?c+i:c;
+        if(puzzleGrid[rr][cc]&&puzzleGrid[rr][cc]!==w[i]){ok=false;break;}
+      }
+      if(ok){
+        for(let i=0;i<w.length;i++){const rr=dir==='H'?r:r+i,cc=dir==='H'?c+i:c;puzzleGrid[rr][cc]=w[i];}
+        puzzlePlaced.push({word:w,r,c,dir});placed=true;
+      }
+    }
+  });
+  const alpha='ABCDEFGHIJKLMNOPRSTUVYZabcdefghijklmnoprstuvyz'.toUpperCase();
+  for(let r=0;r<GRID_SIZE;r++)for(let c=0;c<GRID_SIZE;c++)if(!puzzleGrid[r][c])puzzleGrid[r][c]=alpha[Math.floor(Math.random()*alpha.length)];
+  document.getElementById('puzzle-score').textContent='0/'+words.length;
+  document.getElementById('puzzle-status').textContent=words.length+' kelime kaldı';
+  document.getElementById('puzzle-win').className='puzzle-win';
+  document.getElementById('puzzle-words').innerHTML=words.map(w=>`<span class="puzzle-word" id="pw-${w}">${w}</span>`).join('');
+  renderPuzzleGrid();
+}
+
+function renderPuzzleGrid(){
+  const tbl=document.getElementById('puzzleTable');
+  tbl.innerHTML='';
+  for(let r=0;r<GRID_SIZE;r++){
+    const tr=document.createElement('tr');
+    for(let c=0;c<GRID_SIZE;c++){
+      const td=document.createElement('td');
+      td.className='puzzle-cell';
+      td.textContent=puzzleGrid[r][c];
+      td.dataset.r=r; td.dataset.c=c;
+      const key=r+','+c;
+      if(puzzleFoundCells.includes(key))td.classList.add('found');
+      td.addEventListener('touchstart',e=>{e.preventDefault();startSelect(r,c);},{passive:false});
+      td.addEventListener('touchmove',e=>{e.preventDefault();const t=document.elementFromPoint(e.touches[0].clientX,e.touches[0].clientY);if(t&&t.classList.contains('puzzle-cell'))moveSelect(+t.dataset.r,+t.dataset.c);},{passive:false});
+      td.addEventListener('touchend',e=>{e.preventDefault();endSelect();},{passive:false});
+      td.addEventListener('mousedown',()=>startSelect(r,c));
+      td.addEventListener('mouseover',()=>moveSelect(r,c));
+      td.addEventListener('mouseup',()=>endSelect());
+      tr.appendChild(td);
+    }
+    tbl.appendChild(tr);
+  }
+}
+
+let isSelecting=false,selStart=null,selEnd=null;
+function startSelect(r,c){isSelecting=true;selStart={r,c};selEnd={r,c};highlightSelection();}
+function moveSelect(r,c){if(!isSelecting)return;selEnd={r,c};highlightSelection();}
+function endSelect(){if(!isSelecting)return;isSelecting=false;checkPuzzleWord();}
+function highlightSelection(){
+  document.querySelectorAll('.puzzle-cell.selecting').forEach(el=>el.classList.remove('selecting'));
+  if(!selStart)return;
+  const cells=getSelectionCells(selStart,selEnd);
+  cells.forEach(({r,c})=>{
+    const key=r+','+c;
+    if(!puzzleFoundCells.includes(key)){
+      document.querySelector(`[data-r="${r}"][data-c="${c}"]`)?.classList.add('selecting');
+    }
+  });
+}
+function getSelectionCells(s,e){
+  const cells=[];
+  const dr=e.r-s.r, dc=e.c-s.c;
+  if(dr===0&&dc===0){cells.push({r:s.r,c:s.c});return cells;}
+  if(dr===0){const step=dc>0?1:-1;for(let c=s.c;c!==e.c+step;c+=step)cells.push({r:s.r,c});}
+  else if(dc===0){const step=dr>0?1:-1;for(let r=s.r;r!==e.r+step;r+=step)cells.push({r,c:s.c});}
+  return cells;
+}
+function checkPuzzleWord(){
+  document.querySelectorAll('.puzzle-cell.selecting').forEach(el=>el.classList.remove('selecting'));
+  const cells=getSelectionCells(selStart,selEnd);
+  if(cells.length<3)return;
+  const word=cells.map(({r,c})=>puzzleGrid[r][c]).join('');
+  const wordRev=word.split('').reverse().join('');
+  const found=puzzlePlaced.find(p=>p.word===word||p.word===wordRev);
+  if(found&&!puzzleFound.includes(found.word)){
+    puzzleFound.push(found.word);
+    cells.forEach(({r,c})=>{
+      const key=r+','+c;
+      if(!puzzleFoundCells.includes(key))puzzleFoundCells.push(key);
+      document.querySelector(`[data-r="${r}"][data-c="${c}"]`)?.classList.add('found');
+    });
+    const pwEl=document.getElementById('pw-'+found.word);
+    if(pwEl)pwEl.classList.add('found');
+    const rem=puzzlePlaced.length-puzzleFound.length;
+    document.getElementById('puzzle-score').textContent=puzzleFound.length+'/'+puzzlePlaced.length;
+    document.getElementById('puzzle-status').textContent=rem>0?rem+' kelime kaldı':'🎉 Tüm kelimeler bulundu!';
+    if(puzzleFound.length===puzzlePlaced.length)document.getElementById('puzzle-win').className='puzzle-win show';
+  }
+  selStart=null;selEnd=null;
+}
+document.addEventListener('mouseup',()=>{if(isSelecting){isSelecting=false;checkPuzzleWord();}});
+
+// HESAPLAMA
+function updateCalc(){
+  const s1=+document.getElementById('s1').value, s2=+document.getElementById('s2').value;
+  const s3=+document.getElementById('s3').value, s4=+document.getElementById('s4').value;
+  const s5=+document.getElementById('s5').value, s6=+document.getElementById('s6').value;
+  const s7=+document.getElementById('s7').value, s8=+document.getElementById('s8').value;
+  const s9=+document.getElementById('s9').value, s10=+document.getElementById('s10').value;
+  const s11=+document.getElementById('s11').value;
+  document.getElementById('lv1').textContent=s1+' dk';
+  document.getElementById('lv2').textContent=s2+' kez';
+  document.getElementById('lv3').textContent=s3+' kez';
+  document.getElementById('lv4').textContent=s4+' bardak';
+  document.getElementById('lv5').textContent=s5+' fincan';
+  document.getElementById('lv6').textContent=s6+' kez';
+  document.getElementById('lv7').textContent=s7+' kez';
+  document.getElementById('lv8').textContent=s8+' porsiyon';
+  document.getElementById('lv9').textContent=s9+' porsiyon';
+  document.getElementById('lv10').textContent=s10+' porsiyon';
+  document.getElementById('lv11').textContent=s11+' adet';
+  const banyo=Math.round(s1*9+s2*8);
+  const mutfak=Math.round((s3/7)*17+s4*35+s5*140);
+  const ev=Math.round((s6/7)*60+(s7/7)*30);
+  const beslenme=Math.round((s8/7)*2200+(s9/7)*615+s10*153);
+  const giyim=Math.round((s11/30)*386);
+  const total=banyo+mutfak+ev+beslenme+giyim+500;
+  document.getElementById('resNum').textContent=total.toLocaleString('tr-TR');
+  const pct=Math.min(100,Math.round(total/8000*100));
+  document.getElementById('resBar').style.width=pct+'%';
+  let cmp=total<2500?'🟢 Ortalamanın çok altında — harika!':total<4000?'🟡 Ortalama seviye (~3.800 L)':total<6000?'🟠 Ortalamanın üzerinde':'🔴 Çok yüksek — azaltmayı dene!';
+  document.getElementById('resCompare').textContent=cmp;
+  document.getElementById('resBreakdown').innerHTML=`<div class="result-breakdown-ttl">📊 Dağılım</div><div class="rb-row"><span>🚿 Banyo</span><span>${banyo.toLocaleString('tr-TR')} L</span></div><div class="rb-row"><span>🍽️ Mutfak</span><span>${mutfak.toLocaleString('tr-TR')} L</span></div><div class="rb-row"><span>🏠 Ev</span><span>${ev.toLocaleString('tr-TR')} L</span></div><div class="rb-row"><span>🥗 Beslenme</span><span>${beslenme.toLocaleString('tr-TR')} L</span></div><div class="rb-row"><span>👕 Giyim</span><span>${giyim.toLocaleString('tr-TR')} L</span></div><div class="rb-row"><span>💧 TOPLAM</span><span>${total.toLocaleString('tr-TR')} L</span></div>`;
+  const tips=[];
+  if(s1>8)tips.push({i:'🚿',t:'Duşunu '+(s1-5)+' dk kısalt → ~'+((s1-5)*9)+' L tasarruf!'});
+  if(s8>3)tips.push({i:'🥩',t:'Haftada bir et yemeği yerine baklagil → ~'+Math.round(s8*314)+' L tasarruf!'});
+  if(s5>2)tips.push({i:'☕',t:'Günde bir kahve az iç → ~140 L tasarruf!'});
+  if(s11>3)tips.push({i:'👕',t:'İkinci el kıyafet tercih et!'});
+  if(tips.length===0)tips.push({i:'🌟',t:'Harika alışkanlıklar! Böyle devam et.'});
+  document.getElementById('tipsList').innerHTML=tips.slice(0,4).map(t=>`<div class="tip-row"><span class="tip-ico">${t.i}</span><div class="tip-row-txt">${t.t}</div></div>`).join('');
+}
+</script>
+</body>
+</html>
