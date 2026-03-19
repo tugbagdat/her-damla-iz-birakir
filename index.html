@@ -405,8 +405,35 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 
   <!-- ══ QUIZ ══ -->
   <div class="page" id="p-quiz">
-    <div class="quiz-hero"><div class="quiz-hero-title">❓ Bilgi Yarışması</div><div class="quiz-hero-sub">Su ayak izi bilgini test et!</div></div>
-    <div class="quiz-wrap"><div class="qprog-bar" id="qprog"></div><div id="quiz-container"></div></div>
+    <div class="quiz-hero"><div class="quiz-hero-title">❓ Bilgi Yarışması</div><div class="quiz-hero-sub">20 soru · 4 kategori · Rozet kazan!</div></div>
+    <div class="quiz-wrap">
+      <div id="quiz-menu">
+        <div style="background:#fff;border-radius:14px;padding:14px 16px;margin-bottom:12px;box-shadow:0 3px 14px rgba(0,0,0,.07)">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--sub);margin-bottom:10px">🏅 Kazanılan Rozetler</div>
+          <div id="badge-shelf" style="display:flex;gap:8px;flex-wrap:wrap;min-height:40px;align-items:center"></div>
+        </div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ocean);margin-bottom:10px">📚 Kategori Seç</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+          <div onclick="startQuiz('all')" style="background:linear-gradient(135deg,var(--deep),var(--ocean));border-radius:14px;padding:14px;cursor:pointer;active:transform:scale(.96)"><div style="font-size:24px;margin-bottom:4px">🌊</div><div style="font-size:13px;font-weight:700;color:#fff">Tümü</div><div style="font-size:10px;color:rgba(255,255,255,.7)">20 soru</div><div style="font-size:10px;font-weight:700;background:rgba(255,255,255,.2);border-radius:8px;padding:2px 8px;color:#fff;margin-top:6px;display:inline-block">🏆 Tam Uzman</div></div>
+          <div onclick="startQuiz('gida')" style="background:linear-gradient(135deg,#C25B3B,var(--amber));border-radius:14px;padding:14px;cursor:pointer"><div style="font-size:24px;margin-bottom:4px">🍔</div><div style="font-size:13px;font-weight:700;color:#fff">Gıda & Su</div><div style="font-size:10px;color:rgba(255,255,255,.7)">5 soru</div><div style="font-size:10px;font-weight:700;background:rgba(255,255,255,.2);border-radius:8px;padding:2px 8px;color:#fff;margin-top:6px;display:inline-block">🥗 Gıda Uzmanı</div></div>
+          <div onclick="startQuiz('teknoloji')" style="background:linear-gradient(135deg,#6B2D8B,#A855C8);border-radius:14px;padding:14px;cursor:pointer"><div style="font-size:24px;margin-bottom:4px">📱</div><div style="font-size:13px;font-weight:700;color:#fff">Teknoloji</div><div style="font-size:10px;color:rgba(255,255,255,.7)">5 soru</div><div style="font-size:10px;font-weight:700;background:rgba(255,255,255,.2);border-radius:8px;padding:2px 8px;color:#fff;margin-top:6px;display:inline-block">💻 Dijital Bilinç</div></div>
+          <div onclick="startQuiz('doga')" style="background:linear-gradient(135deg,var(--leaf),var(--mint));border-radius:14px;padding:14px;cursor:pointer"><div style="font-size:24px;margin-bottom:4px">🌍</div><div style="font-size:13px;font-weight:700;color:#fff">Doğa & İklim</div><div style="font-size:10px;color:rgba(255,255,255,.7)">5 soru</div><div style="font-size:10px;font-weight:700;background:rgba(255,255,255,.2);border-radius:8px;padding:2px 8px;color:#fff;margin-top:6px;display:inline-block">🌿 Doğa Dostu</div></div>
+          <div onclick="startQuiz('tasarruf')" style="background:linear-gradient(135deg,#0F4C75,#1B98E0);border-radius:14px;padding:14px;cursor:pointer;grid-column:1/-1"><div style="font-size:24px;margin-bottom:4px">💡</div><div style="font-size:13px;font-weight:700;color:#fff">Su Tasarrufu & Türkiye</div><div style="font-size:10px;color:rgba(255,255,255,.7)">5 soru</div><div style="font-size:10px;font-weight:700;background:rgba(255,255,255,.2);border-radius:8px;padding:2px 8px;color:#fff;margin-top:6px;display:inline-block">🇹🇷 Türkiye Uzmanı</div></div>
+        </div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ocean);margin-bottom:10px">⭐ Zorluk Seviyesi</div>
+        <div style="display:flex;gap:8px;margin-bottom:6px">
+          <button onclick="setDiff('easy')" id="dbtn-easy" style="flex:1;padding:10px;border-radius:10px;border:2px solid #2D6A4F;background:#EAF7EE;color:#2D6A4F;font-size:11px;font-weight:700;cursor:pointer">⭐ Kolay</button>
+          <button onclick="setDiff('mid')" id="dbtn-mid" style="flex:1;padding:10px;border-radius:10px;border:2px solid #856404;background:#fff3cd;color:#856404;font-size:11px;font-weight:700;cursor:pointer">⭐⭐ Orta</button>
+          <button onclick="setDiff('hard')" id="dbtn-hard" style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--coral);background:#FEEEEA;color:var(--coral);font-size:11px;font-weight:700;cursor:pointer">⭐⭐⭐ Zor</button>
+          <button onclick="setDiff('all')" id="dbtn-all" style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--ocean);background:var(--ocean);color:#fff;font-size:11px;font-weight:700;cursor:pointer">🌟 Karma</button>
+        </div>
+        <div style="font-size:11px;color:var(--sub);text-align:center;margin-bottom:4px" id="diff-label">Tüm zorluk seviyeleri</div>
+      </div>
+      <div id="quiz-game" style="display:none">
+        <div class="qprog-bar" id="qprog"></div>
+        <div id="quiz-container"></div>
+      </div>
+    </div>
   </div>
 
   <!-- ══ OYUNLAR ANA MENÜ ══ -->
@@ -711,7 +738,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 setTimeout(()=>{
   document.getElementById('splash').classList.add('hide');
   document.getElementById('app').classList.add('show');
-  renderQuiz(); initMatch(); initDY(); initFill(); initWheel(); initPuzzle(); updateCalc();
+  initQuiz(); initMatch(); initDY(); initFill(); initWheel(); initPuzzle(); updateCalc();
 },2400);
 
 // NAV
@@ -740,36 +767,149 @@ function toggleAcc(el){
 function openYT(url){window.open(url,'_blank');}
 
 // ══ QUIZ ══
-const Qs=[
-  {q:"Bir kilo sığır etinin su ayak izi yaklaşık kaçtır?",opts:["1.500 L","3.800 L","7.500 L","15.400 L"],a:3,info:"🥩 1 kg sığır eti için ~15.400 litre su harcanır!"},
-  {q:"Mavi su ayak izi neyi ifade eder?",opts:["Yağmur suyunu","Kirletilen suyu","Tatlı su tüketimini","Deniz suyunu"],a:2,info:"💧 Nehir, göl ve yeraltı sularının tüketimini ölçer."},
-  {q:"Bir fincan kahve için kaç litre su kullanılır?",opts:["10 L","50 L","140 L","300 L"],a:2,info:"☕ Tek fincan kahve için 140 litre su harcanır!"},
-  {q:"Dünyada kaç kişi su sıkıntısı yaşar?",opts:["500 milyon","1 milyar","2,7 milyar","5 milyar"],a:2,info:"🌍 2,7 milyar insan yılın en az bir ayı su sıkıntısıyla geçirir."},
-  {q:"Bir kot pantolon için ne kadar su gerekir?",opts:["500 L","2.000 L","5.000 L","10.000 L"],a:3,info:"👖 Bir kot pantolon yaklaşık 10.000 litre su harcar."},
-  {q:"Gri su ayak izi neyi ölçer?",opts:["İçme suyunu","Kirletilen suyu arıtmak için gereken suyu","Yağmur suyunu","Endüstriyel suyu"],a:1,info:"🏭 Kirletilen suyu temizlemek için gereken tatlı su miktarıdır."},
-  {q:"Türkiye kişi başı yıllık ne kadar kullanılabilir suya sahip?",opts:["500 m³","1.346 m³","3.000 m³","8.000 m³"],a:1,info:"🇹🇷 Türkiye ~1.346 m³/kişi ile su azlığı sınırındadır."},
-  {q:"Dünya tatlı suyunun kaçı tarımda kullanılır?",opts:["%10","%30","%50","%70"],a:3,info:"🌾 Tatlı suyun yaklaşık %70'i tarımsal sulama için kullanılır."}
-];
-let qIdx=0,qScore=0,qAnswered=false;
-function renderQuiz(){
-  document.getElementById('qprog').innerHTML=Qs.map((_,i)=>`<div class="qp ${i<qIdx?'done':i===qIdx?'cur':''}"></div>`).join('');
-  const c=document.getElementById('quiz-container');
-  if(qIdx>=Qs.length){
-    let msg=qScore<=3?'Biraz daha çalış! 📖':qScore<=5?'İyi gidiyorsun! 👍':qScore<=7?'Harika! 🌟':'Uzman! 🏆';
-    c.innerHTML=`<div class="qscore"><div class="qscore-trophy">${qScore>=7?'🏆':qScore>=5?'🌟':'💧'}</div><div class="qscore-title">${msg}</div><div class="qscore-pts">${qScore}/${Qs.length}</div><div class="qscore-sub">doğru cevap</div><button class="qscore-btn" onclick="qIdx=0;qScore=0;renderQuiz()">Tekrar ↩</button></div>`;
+// ══ QUIZ VERILERI ══
+const allQs = {
+  gida:[
+    {q:"Bir kilo sığır etinin su ayak izi yaklaşık kaçtır?",opts:["1.500 L","3.800 L","7.500 L","15.400 L"],a:3,d:'easy',info:"🥩 1 kg sığır eti için ~15.400 litre su harcanır! Bu bir kişinin 42 günlük içme suyuna eşittir."},
+    {q:"Bir fincan kahve için kaç litre su kullanılır?",opts:["10 L","50 L","140 L","300 L"],a:2,d:'easy',info:"☕ Tek fincan kahve için 140 litre su harcanır. Çekirdek yetiştirme ve işleme aşamaları çok su ister."},
+    {q:"Hangi gıdanın su ayak izi en yüksektir?",opts:["Tavuk","Pirinç","Sığır eti","Buğday"],a:2,d:'easy',info:"🥩 Sığır eti 1 kg için 15.400 L ile zirvede! Et tüketimini azaltmak su tasarrufunda büyük fark yaratır."},
+    {q:"1 kg pirinç üretmek için kaç litre su gerekir?",opts:["500 L","1.200 L","2.500 L","5.000 L"],a:2,d:'mid',info:"🍚 1 kg pirinç için yaklaşık 2.500 litre su harcanır. Tarım alanlarının sulanması büyük pay oluşturur."},
+    {q:"Bir bar çikolata (100g) kaç litre su harcar?",opts:["200 L","700 L","1.700 L","5.000 L"],a:2,d:'mid',info:"🍫 Bir bar çikolata için ~1.700 litre su harcanır! Kakao bitkisi tropik ormanlarda çok su ister."},
+    {q:"1 litre süt üretmek için yaklaşık kaç litre su harcanır?",opts:["100 L","400 L","1.020 L","3.000 L"],a:2,d:'mid',info:"🥛 1 litre süt için ~1.020 litre su gerekir. İneğin yediği yem ve içtiği su hesaba katıldığında bu rakama ulaşılır."},
+    {q:"Bir hamburger için ne kadar su harcanır?",opts:["500 L","1.200 L","2.400 L","6.000 L"],a:2,d:'hard',info:"🍔 Bir hamburger için ~2.400 litre su! Sığır eti, ekmek ve sebzelerin toplamı devasa su ayak izi oluşturur."},
+    {q:"1 litre portakal suyu için kaç litre su gerekir?",opts:["100 L","500 L","1.000 L","3.000 L"],a:2,d:'hard',info:"🧃 1 litre portakal suyu için ~1.000 litre su harcanır. Portakal bahçelerini sulamak çok yoğun su gerektirir."}
+  ],
+  teknoloji:[
+    {q:"Bir akıllı telefon üretmek için kaç litre su harcanır?",opts:["500 L","3.000 L","12.760 L","50.000 L"],a:2,d:'easy',info:"📱 Bir akıllı telefon üretimi için ~12.760 litre su harcanır. Çip üretimi ve metal çıkarımı çok su ister."},
+    {q:"Bir kot pantolon için ne kadar su gerekir?",opts:["500 L","2.000 L","5.000 L","10.000 L"],a:3,d:'easy',info:"👖 Bir kot pantolon için ~10.000 litre su! Pamuk tarlasiyle başlayan süreç boyama ve işlemeyle biter."},
+    {q:"Bir pamuklu tişört kaç litre su harcar?",opts:["500 L","1.200 L","2.700 L","8.000 L"],a:2,d:'easy',info:"👕 1 tişört için ~2.700 litre su harcanır. Pamuk bitkisini sulamak, boyamak ve işlemek gerekir."},
+    {q:"Bir dizüstü bilgisayar üretmek için kaç litre su gerekir?",opts:["2.000 L","8.000 L","20.000 L","100.000 L"],a:2,d:'mid',info:"💻 Bir laptop için ~20.000 litre su! Yarı iletken üretimi ve fabrika soğutma sistemleri çok su kullanır."},
+    {q:"Bir oyun konsolu (PlayStation/Xbox) üretmek için kaç litre su harcanır?",opts:["5.000 L","20.000 L","55.000 L","200.000 L"],a:2,d:'mid',info:"🎮 Bir konsol için ~55.000 litre su! Yüksek performanslı çip üretimi son derece su yoğun bir süreçtir."},
+    {q:"Bir deri spor ayakkabı üretmek için kaç litre su harcanır?",opts:["500 L","2.000 L","8.000 L","25.000 L"],a:2,d:'mid',info:"👟 1 çift deri ayakkabı için ~8.000 litre su! Deri işleme ve kimyasal boyama süreçleri çok su harcar."},
+    {q:"Veri merkezleri soğutma için neden bu kadar çok su kullanır?",opts:["İçme suyu ihtiyacı için","Sunucular ısınır, soğutma gerekir","Güvenlik amaçlı","Temizlik için"],a:1,d:'hard',info:"☁️ Sunucular çalışırken ısı üretir. Bu ısıyı soğutmak için veri merkezleri devasa miktarda su kullanır."},
+    {q:"Bir A4 kağıt yaprağı üretmek için kaç litre su harcanır?",opts:["0,5 L","2 L","10 L","50 L"],a:2,d:'hard',info:"📄 Sadece 1 A4 için 10 litre su! Ağaç yetiştirme, kesme ve kağıt üretim süreci su harcar."}
+  ],
+  doga:[
+    {q:"Mavi su ayak izi neyi ifade eder?",opts:["Yağmur suyunu","Kirletilen suyu","Tatlı su tüketimini","Deniz suyunu"],a:2,d:'easy',info:"💧 Mavi su ayak izi; nehir, göl ve yeraltı sularının tüketimini ölçer. En çok tarımsal sulamada görülür."},
+    {q:"Yeşil su ayak izi ne anlama gelir?",opts:["Deniz suyu","Yağmur suyunun bitkilerce kullanımı","Kirletilen su","Temizlenmiş su"],a:1,d:'easy',info:"🌧️ Yeşil su, yağmur suyunun bitkiler tarafından kullanılan kısmıdır. Tarım arazilerinde toprak nemi olarak kalır."},
+    {q:"Dünyada kaç kişi su sıkıntısı yaşar?",opts:["500 milyon","1 milyar","2,7 milyar","5 milyar"],a:2,d:'easy',info:"🌍 2,7 milyar insan yılın en az bir ayında ciddi su sıkıntısıyla karşılaşıyor. Bu dünya nüfusunun üçte biri!"},
+    {q:"Son 50 yılda sulak alanların ne kadarı yok oldu?",opts:["%10","%20","%35","%60"],a:2,d:'mid',info:"🌿 Sulak alanların yaklaşık %35'i son 50 yılda yok oldu. İklim değişikliği ve insan faaliyetleri ana nedenler."},
+    {q:"İklim değişikliği su kaynaklarını nasıl etkiler?",opts:["Artırır","Değiştirmez","Kuraklık ve sel riskini artırır","Sadece denizleri etkiler"],a:2,d:'mid',info:"🌡️ İklim değişikliği hem kuraklık hem ani sel riskini artırır. Su döngüsü bozulunca tarım ve içme suyu tehlikeye girer."},
+    {q:"Gri su ayak izi neyi ölçer?",opts:["İçme suyunu","Kirletilen suyu arıtmak için gereken suyu","Yağmur suyunu","Endüstriyel suyu"],a:1,d:'mid',info:"🏭 Gri su ayak izi, üretim sırasında kirletilen suyu kabul edilebilir düzeye getirmek için gereken tatlı su miktarıdır."},
+    {q:"Dünya tatlı suyunun kaçı tarımda kullanılır?",opts:["%10","%30","%50","%70"],a:3,d:'hard',info:"🌾 Tatlı suyun ~%70'i tarımsal sulama için kullanılır. Bu yüzden et tüketimini azaltmak büyük su tasarrufu sağlar."},
+    {q:"2050 yılına kadar dünya nüfusunun tahminen kaçı su sıkıntısı yaşayacak?",opts:["%10","%25","%40","%60"],a:2,d:'hard',info:"📊 2050'de nüfusun %40'ından fazlasının su sıkıntısı yaşayabileceği öngörülüyor. Şimdiden harekete geçmek şart!"}
+  ],
+  tasarruf:[
+    {q:"Türkiye kişi başı yıllık ne kadar kullanılabilir suya sahip?",opts:["500 m³","1.346 m³","3.000 m³","8.000 m³"],a:1,d:'easy',info:"🇹🇷 Türkiye ~1.346 m³/kişi/yıl ile su azlığı sınırındadır. Dünya ortalamasının çok altında!"},
+    {q:"Diş fırçalarken musluğu açık bırakmak dakikada kaç litre su israf eder?",opts:["1 L","6 L","15 L","30 L"],a:1,d:'easy',info:"🪥 Dakikada ~6 litre! 2 dakika fırçalamada musluğu kapatmak 12 litre tasarruf sağlar. Yılda 4.380 litre!"},
+    {q:"Hangi alışkanlık en fazla su tasarrufu sağlar?",opts:["Kısa duş almak","Etsiz beslenme günleri","Musluğu kapatmak","Hepsi eşit"],a:1,d:'mid',info:"🥗 Haftada 1 etsiz gün ~1.500 litre/hafta tasarruf sağlar. Beslenme alışkanlıkları su tasarrufunda önemli rol oynar."},
+    {q:"Türkiye'de şehirlerdeki su altyapı kayıpları yaklaşık ne kadardır?",opts:["%5","%15","%35","%60"],a:2,d:'mid',info:"🏙️ Türkiye'de su şebekesi kayıpları ortalama %30-40 civarındadır. Bu kayıplar giderilse büyük tasarruf sağlanır."},
+    {q:"Damlayan bir musluk yılda yaklaşık kaç litre su kaybettirir?",opts:["500 L","2.000 L","5.500 L","20.000 L"],a:2,d:'mid',info:"🚰 Damlayan bir musluk yılda ~5.500 litre su kaybettirir! Hemen tamir ettirmek büyük tasarruf sağlar."},
+    {q:"Küvet banyosu ile duş arasındaki su farkı ne kadardır?",opts:["10 L","50 L","100 L","200 L"],a:2,d:'mid',info:"🛁 Küvet ~150 L, kısa duş ~50 L kullanır. Küvet yerine duş almak her seferinde ~100 litre tasarruf sağlar."},
+    {q:"Türkiye'nin yıllık kullanılabilir su potansiyeli ne kadardır?",opts:["10 milyar m³","50 milyar m³","112 milyar m³","500 milyar m³"],a:2,d:'hard',info:"💧 Türkiye'nin toplam kullanılabilir su potansiyeli ~112 milyar m³'tür. Ancak kişi başına düşen miktar düşüktür."},
+    {q:"Su ayak izi kavramını ilk kim geliştirdi?",opts:["Albert Einstein","Prof. Arjen Hoekstra","Jacques Cousteau","Carl Sagan"],a:1,d:'hard',info:"🔬 Su ayak izi kavramı 2002 yılında Prof. Arjen Hoekstra tarafından geliştirildi. Suyun 'gizli kullanımını' gün yüzüne çıkarır."}
+  ]
+};
+
+// Rozetler
+const badges = {
+  gida:    {id:'gida',    icon:'🥗', name:'Gıda Uzmanı',    color:'#C25B3B'},
+  teknoloji:{id:'teknoloji',icon:'💻',name:'Dijital Bilinç', color:'#6B2D8B'},
+  doga:    {id:'doga',   icon:'🌿', name:'Doğa Dostu',     color:'#2D6A4F'},
+  tasarruf:{id:'tasarruf',icon:'🇹🇷',name:'Türkiye Uzmanı', color:'#0F4C75'},
+  all:     {id:'all',    icon:'🏆', name:'Tam Uzman',      color:'#03045E'},
+};
+let earnedBadges = JSON.parse(localStorage.getItem('hd_badges')||'[]');
+let currentDiff = 'all';
+let qIdx=0, qScore=0, qAnswered=false, activeQs=[];
+
+function setDiff(d){
+  currentDiff=d;
+  const labels={easy:'⭐ Kolay sorular seçildi',mid:'⭐⭐ Orta sorular seçildi',hard:'⭐⭐⭐ Zor sorular seçildi',all:'🌟 Tüm zorluk seviyeleri karışık'};
+  document.getElementById('diff-label').textContent=labels[d];
+  ['easy','mid','hard','all'].forEach(x=>{
+    const btn=document.getElementById('dbtn-'+x);
+    if(!btn)return;
+    btn.style.fontWeight=x===d?'900':'700';
+    btn.style.boxShadow=x===d?'0 0 0 3px rgba(0,119,182,.3)':'none';
+  });
+}
+
+function startQuiz(cat){
+  let pool = cat==='all'
+    ? Object.values(allQs).flat()
+    : (allQs[cat]||[]);
+  if(currentDiff!=='all') pool=pool.filter(q=>q.d===currentDiff);
+  if(pool.length===0) pool=cat==='all'?Object.values(allQs).flat():(allQs[cat]||[]);
+  activeQs=[...pool].sort(()=>Math.random()-.5).slice(0,cat==='all'?20:5);
+  qIdx=0; qScore=0; qAnswered=false;
+  document.getElementById('quiz-menu').style.display='none';
+  document.getElementById('quiz-game').style.display='block';
+  renderQuiz(cat);
+}
+
+function renderBadgeShelf(){
+  const shelf=document.getElementById('badge-shelf');
+  if(!shelf)return;
+  if(earnedBadges.length===0){
+    shelf.innerHTML='<span style="font-size:12px;color:var(--sub);font-style:italic">Quiz tamamla rozet kazan! 🏅</span>';
     return;
   }
-  const Q=Qs[qIdx];
-  c.innerHTML=`<div class="qcard"><div class="qcard-num">Soru ${qIdx+1}/${Qs.length}</div><div class="qcard-q">${Q.q}</div><div class="qopts">${Q.opts.map((o,i)=>`<button class="qopt" onclick="pickQ(${i})">${o}</button>`).join('')}</div><div class="qfb" id="qfb"></div><button class="qnext" id="qnxt" onclick="qIdx++;renderQuiz()">Sonraki →</button></div>`;
+  shelf.innerHTML=earnedBadges.map(id=>{
+    const b=badges[id];
+    return `<div style="background:${b.color};border-radius:10px;padding:5px 10px;display:flex;align-items:center;gap:5px"><span style="font-size:16px">${b.icon}</span><span style="font-size:11px;font-weight:700;color:#fff">${b.name}</span></div>`;
+  }).join('');
+}
+
+function awardBadge(cat, score, total){
+  if(score>=Math.ceil(total*0.6)&&!earnedBadges.includes(cat)){
+    earnedBadges.push(cat);
+    try{localStorage.setItem('hd_badges',JSON.stringify(earnedBadges));}catch(e){}
+  }
+}
+
+function renderQuiz(cat){
+  document.getElementById('qprog').innerHTML=activeQs.map((_,i)=>`<div class="qp ${i<qIdx?'done':i===qIdx?'cur':''}"></div>`).join('');
+  const c=document.getElementById('quiz-container');
+  if(qIdx>=activeQs.length){
+    awardBadge(cat||'all', qScore, activeQs.length);
+    renderBadgeShelf();
+    const pct=Math.round(qScore/activeQs.length*100);
+    let msg=pct<40?'Biraz daha çalış! 📖':pct<60?'Fena değil! 👍':pct<80?'Harika! 🌟':'Uzman! 🏆';
+    let trophy=pct>=80?'🏆':pct>=60?'🌟':pct>=40?'💧':'📖';
+    let badgeMsg='';
+    if(qScore>=Math.ceil(activeQs.length*0.6)){
+      const b=badges[cat||'all'];
+      badgeMsg=`<div style="background:${b.color};border-radius:12px;padding:10px;margin-top:12px;display:flex;align-items:center;gap:8px;justify-content:center"><span style="font-size:24px">${b.icon}</span><span style="font-size:13px;font-weight:700;color:#fff">Rozet kazandın: ${b.name}!</span></div>`;
+    }
+    c.innerHTML=`<div class="qscore"><div class="qscore-trophy">${trophy}</div><div class="qscore-title">${msg}</div><div class="qscore-pts">${qScore}/${activeQs.length}</div><div class="qscore-sub">(%${pct} başarı)</div>${badgeMsg}<div style="display:flex;gap:8px;margin-top:14px"><button class="qscore-btn" style="flex:1" onclick="backToMenu()">← Kategoriler</button><button class="qscore-btn" style="flex:1;background:var(--leaf)" onclick="qIdx=0;qScore=0;renderQuiz('${cat||'all'}')">Tekrar ↩</button></div></div>`;
+    return;
+  }
+  const Q=activeQs[qIdx];
+  const lvl={easy:'⭐ Kolay',mid:'⭐⭐ Orta',hard:'⭐⭐⭐ Zor'}[Q.d]||'';
+  const lvlColor={easy:'#2D6A4F',mid:'#856404',hard:'#C25B3B'}[Q.d]||'#888';
+  c.innerHTML=`<div class="qcard"><div class="qcard-num">Soru ${qIdx+1}/${activeQs.length} <span style="font-size:10px;font-weight:700;color:${lvlColor};background:${lvlColor}22;padding:2px 8px;border-radius:8px;margin-left:4px">${lvl}</span></div><div class="qcard-q">${Q.q}</div><div class="qopts">${Q.opts.map((o,i)=>`<button class="qopt" onclick="pickQ(${i},'${cat||'all'}')">${o}</button>`).join('')}</div><div class="qfb" id="qfb"></div><button class="qnext" id="qnxt" onclick="qIdx++;renderQuiz('${cat||'all'}')">Sonraki →</button></div>`;
   qAnswered=false;
 }
-function pickQ(i){
+
+function pickQ(i,cat){
   if(qAnswered)return; qAnswered=true;
-  const Q=Qs[qIdx];
+  const Q=activeQs[qIdx];
   document.querySelectorAll('.qopt').forEach((el,idx)=>{if(idx===Q.a)el.classList.add('correct');else if(idx===i&&i!==Q.a)el.classList.add('wrong');});
   const fb=document.getElementById('qfb'); fb.textContent=Q.info; fb.className='qfb show '+(i===Q.a?'ok':'err');
   if(i===Q.a)qScore++;
   document.getElementById('qnxt').className='qnext show';
+}
+
+function backToMenu(){
+  document.getElementById('quiz-game').style.display='none';
+  document.getElementById('quiz-menu').style.display='block';
+  renderBadgeShelf();
+}
+
+function initQuiz(){
+  setDiff('all');
+  renderBadgeShelf();
 }
 
 // ══ OYUN 1: EŞLEŞTİRME ══
