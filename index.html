@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Su Ayak İzi Dergisi</title>
+<title>Her Damla İz Bırakır</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -336,8 +336,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 <!-- SPLASH -->
 <div id="splash">
   <div class="splash-drop">💧</div>
-  <div class="splash-title">Su Ayak İzi<br>Dergisi</div>
-  <div class="splash-sub">Her Damla Önemli</div>
+  <div class="splash-title">Her Damla<br>İz Bırakır</div>
+  <div class="splash-sub">Su Ayak İzi Platformu</div>
   <div class="splash-bar"><div class="splash-fill"></div></div>
 </div>
 
@@ -349,7 +349,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
       <div class="hero-wave">〜</div>
       <div class="hero-logo">
         <div class="logo-drop"><span>💧</span></div>
-        <div class="logo-text">Su Ayak İzi Dergisi<small>Her Damla Önemli</small></div>
+        <div class="logo-text">Her Damla İz Bırakır<small>Su Ayak İzi Platformu</small></div>
       </div>
       <div class="hero-main">Suyun İzini<br>Sür! 🌊</div>
       <div class="hero-sub">Geleceği korumak için bugün harekete geç</div>
@@ -552,24 +552,25 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 
   <!-- ══ HESAP ══ -->
   <div class="page" id="p-hesap">
-    <div class="calc-hero"><div class="calc-hero-title">🧮 Su Ayak İzim</div><div class="calc-hero-sub">Gizli su dahil günlük tüketimini hesapla!</div></div>
+    <div class="calc-hero"><div class="calc-hero-title">🧮 Su Ayak İzim</div><div class="calc-hero-sub">Gizli su dahil — hiç düşünmediğin alanlar da burada!</div></div>
     <div class="calc-wrap">
 
       <!-- KİŞİSEL BAKIM -->
       <div class="calc-card">
         <div class="calc-section-ttl">🚿 Kişisel Bakım</div>
         <div class="calc-item"><div class="calc-lbl">Duş süresi<span id="lv1">8 dk</span></div><input type="range" min="1" max="30" value="8" id="s1" oninput="updateCalc()" step="1"></div>
-        <div class="calc-item"><div class="calc-lbl">Diş fırçalarken musluk <span id="lv2">Bazen kapalı</span></div>
+        <div class="calc-item"><div class="calc-lbl">Diş fırçalarken musluk<span id="lv2">Bazen kapalı</span></div>
           <select id="s2" onchange="updateCalc()" style="width:100%;padding:8px 10px;border-radius:9px;border:1.5px solid #e0ecf8;background:#f7fbff;font-size:12px;font-weight:600;color:var(--text);outline:none;margin-top:4px">
             <option value="24">Hiç kapatmıyorum (~24 L israf)</option>
-            <option value="12" selected>Bazen kapatıyorum (~12 L israf)</option>
-            <option value="0">Her zaman kapatıyorum (0 L israf)</option>
+            <option value="12" selected>Bazen kapatıyorum (~12 L)</option>
+            <option value="0">Her zaman kapatıyorum 🌱</option>
           </select>
         </div>
-        <div class="calc-item"><div class="calc-lbl">Kişisel bakım ürünleri<span id="lv3">Orta kullanım</span></div>
-          <select id="s3" onchange="updateCalc()" style="width:100%;padding:8px 10px;border-radius:9px;border:1.5px solid #e0ecf8;background:#f7fbff;font-size:12px;font-weight:600;color:var(--text);outline:none;margin-top:4px">
-            <option value="5">Az / doğal ürünler (~5 L/gün)</option>
-            <option value="15" selected>Orta kullanım (~15 L/gün)</option>
+        <div class="calc-item"><div class="calc-lbl">Küvet banyosu (haftada)<span id="lv3">1 kez</span></div><input type="range" min="0" max="7" value="1" id="s3" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Şampuan/bakım ürünleri<span id="lv4">Orta</span></div>
+          <select id="s4" onchange="updateCalc()" style="width:100%;padding:8px 10px;border-radius:9px;border:1.5px solid #e0ecf8;background:#f7fbff;font-size:12px;font-weight:600;color:var(--text);outline:none;margin-top:4px">
+            <option value="5">Az / doğal ürün (~5 L/gün)</option>
+            <option value="15" selected>Orta (~15 L/gün)</option>
             <option value="35">Çok çeşit ürün (~35 L/gün)</option>
             <option value="60">Sürekli yeni ürün (~60 L/gün)</option>
           </select>
@@ -579,56 +580,90 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
       <!-- OKUL & SOSYAL -->
       <div class="calc-card">
         <div class="calc-section-ttl">🏫 Okul & Sosyal Hayat</div>
-        <div class="calc-item"><div class="calc-lbl">Kahve (günde)<span id="lv4">1 fincan</span></div><input type="range" min="0" max="6" value="1" id="s4" oninput="updateCalc()" step="1"></div>
-        <div class="calc-item"><div class="calc-lbl">Çay (günde)<span id="lv5">3 bardak</span></div><input type="range" min="0" max="15" value="3" id="s5" oninput="updateCalc()" step="1"></div>
-        <div class="calc-item"><div class="calc-lbl">Kantin / dışarıda yemek<span id="lv6">1 öğün</span></div><input type="range" min="0" max="3" value="1" id="s6" oninput="updateCalc()" step="1"></div>
-        <div class="calc-item"><div class="calc-lbl">Kağıt kullanımı<span id="lv7">Orta</span></div>
-          <select id="s7" onchange="updateCalc()" style="width:100%;padding:8px 10px;border-radius:9px;border:1.5px solid #e0ecf8;background:#f7fbff;font-size:12px;font-weight:600;color:var(--text);outline:none;margin-top:4px">
+        <div class="calc-item"><div class="calc-lbl">Kahve (günde)<span id="lv5">1 fincan</span></div><input type="range" min="0" max="6" value="1" id="s5" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Çay (günde)<span id="lv6">3 bardak</span></div><input type="range" min="0" max="15" value="3" id="s6" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Meyve suyu / gazlı içecek (günde)<span id="lv7">1 bardak</span></div><input type="range" min="0" max="8" value="1" id="s7" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Kantin / dışarıda yemek (günde)<span id="lv8">1 öğün</span></div><input type="range" min="0" max="3" value="1" id="s8" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Kağıt kullanımı (okul)<span id="lv9">Orta</span></div>
+          <select id="s9" onchange="updateCalc()" style="width:100%;padding:8px 10px;border-radius:9px;border:1.5px solid #e0ecf8;background:#f7fbff;font-size:12px;font-weight:600;color:var(--text);outline:none;margin-top:4px">
             <option value="10">Az — dijital not tutuyorum (~10 L/gün)</option>
-            <option value="30" selected>Orta — birkaç sayfa/gün (~30 L/gün)</option>
+            <option value="30" selected>Orta — birkaç sayfa (~30 L/gün)</option>
             <option value="70">Çok — sık yazdırıyorum (~70 L/gün)</option>
           </select>
         </div>
+        <div class="calc-item"><div class="calc-lbl">Spor / beden egzersizi (haftada)<span id="lv10">3 gün</span></div><input type="range" min="0" max="7" value="3" id="s10" oninput="updateCalc()" step="1"></div>
       </div>
 
       <!-- GİZLİ GIDA SUYU -->
       <div class="calc-card">
         <div class="calc-section-ttl">🍫 Gizli Gıda Suyu</div>
-        <div class="calc-item"><div class="calc-lbl" style="font-size:11px;color:var(--coral);font-weight:700">⚠️ Bunlarda da su var — şaşıracaksın!</div></div>
-        <div class="calc-item"><div class="calc-lbl">Hamburger / döner (haftada)<span id="lv8">2 kez</span></div><input type="range" min="0" max="14" value="2" id="s8" oninput="updateCalc()" step="1"></div>
-        <div class="calc-item"><div class="calc-lbl">Çikolata / tatlı (haftada)<span id="lv9">2 adet</span></div><input type="range" min="0" max="14" value="2" id="s9" oninput="updateCalc()" step="1"></div>
-        <div class="calc-item"><div class="calc-lbl">Kırmızı et (haftada porsiyon)<span id="lv10">3 porsiyon</span></div><input type="range" min="0" max="14" value="3" id="s10" oninput="updateCalc()" step="1"></div>
-        <div class="calc-item"><div class="calc-lbl">Tavuk / balık (haftada porsiyon)<span id="lv11">4 porsiyon</span></div><input type="range" min="0" max="14" value="4" id="s11" oninput="updateCalc()" step="1"></div>
-        <div class="calc-item"><div class="calc-lbl">Süt ürünleri (günde porsiyon)<span id="lv12">2 porsiyon</span></div><input type="range" min="0" max="8" value="2" id="s12" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl" style="font-size:11px;color:var(--coral);font-weight:700;background:#fff5f2;padding:6px 10px;border-radius:8px">⚠️ 1 hamburger = 2.400 L · 1 çikolata = 1.700 L · 1 kahve = 140 L</div></div>
+        <div class="calc-item"><div class="calc-lbl">Hamburger / döner (haftada)<span id="lv11">2 kez</span></div><input type="range" min="0" max="14" value="2" id="s11" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Çikolata / tatlı (haftada)<span id="lv12">2 adet</span></div><input type="range" min="0" max="14" value="2" id="s12" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Kırmızı et (haftada porsiyon)<span id="lv13">3 porsiyon</span></div><input type="range" min="0" max="14" value="3" id="s13" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Tavuk / balık (haftada porsiyon)<span id="lv14">4 porsiyon</span></div><input type="range" min="0" max="14" value="4" id="s14" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Süt ürünleri (günde porsiyon)<span id="lv15">2 porsiyon</span></div><input type="range" min="0" max="8" value="2" id="s15" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Cips / paketli atıştırmalık (haftada)<span id="lv16">3 paket</span></div><input type="range" min="0" max="14" value="3" id="s16" oninput="updateCalc()" step="1"></div>
       </div>
 
-      <!-- GİZLİ TEKNOLOJİ & GİYİM -->
+      <!-- GİZLİ TEKNOLOJİ -->
       <div class="calc-card">
-        <div class="calc-section-ttl">👕 Giyim & Teknoloji — Gizli Su!</div>
-        <div class="calc-item"><div class="calc-lbl" style="font-size:11px;color:var(--coral);font-weight:700">⚠️ 1 tişört = 2.700 L · 1 telefon = 12.760 L</div></div>
-        <div class="calc-item"><div class="calc-lbl">Online kıyafet alışverişi (aylık)<span id="lv13">1-2 parça</span></div>
-          <select id="s13" onchange="updateCalc()" style="width:100%;padding:8px 10px;border-radius:9px;border:1.5px solid #e0ecf8;background:#f7fbff;font-size:12px;font-weight:600;color:var(--text);outline:none;margin-top:4px">
-            <option value="0">İkinci el / hiç almıyorum 🌱</option>
-            <option value="90" selected>1-2 parça (tişört, çorap vb.)</option>
-            <option value="270">3-5 parça (hızlı moda)</option>
-            <option value="540">6-10 parça (çok sık alışveriş)</option>
-            <option value="1080">10+ parça (sosyal medyadan etkileniyorum)</option>
-          </select>
-        </div>
-        <div class="calc-item"><div class="calc-lbl">Telefon değiştirme sıklığı<span id="lv14">2 yılda bir</span></div>
-          <select id="s14" onchange="updateCalc()" style="width:100%;padding:8px 10px;border-radius:9px;border:1.5px solid #e0ecf8;background:#f7fbff;font-size:12px;font-weight:600;color:var(--text);outline:none;margin-top:4px">
+        <div class="calc-section-ttl">📱 Teknoloji — Gizli Su!</div>
+        <div class="calc-item"><div class="calc-lbl" style="font-size:11px;color:var(--coral);font-weight:700;background:#fff5f2;padding:6px 10px;border-radius:8px">⚠️ 1 telefon = 12.760 L · 1 laptop = 20.000 L · 1 konsol = 55.000 L</div></div>
+        <div class="calc-item"><div class="calc-lbl">Telefon değiştirme sıklığı<span id="lv17">2 yılda bir</span></div>
+          <select id="s17" onchange="updateCalc()" style="width:100%;padding:8px 10px;border-radius:9px;border:1.5px solid #e0ecf8;background:#f7fbff;font-size:12px;font-weight:600;color:var(--text);outline:none;margin-top:4px">
             <option value="35">Her yıl yeni model (~35 L/gün)</option>
             <option value="17" selected>2 yılda bir (~17 L/gün)</option>
             <option value="9">3 yılda bir (~9 L/gün)</option>
             <option value="0">Bozulana kadar / ikinci el 🌱</option>
           </select>
         </div>
-        <div class="calc-item"><div class="calc-lbl">Oyun konsolu / laptop<span id="lv15">Var, eski</span></div>
-          <select id="s15" onchange="updateCalc()" style="width:100%;padding:8px 10px;border-radius:9px;border:1.5px solid #e0ecf8;background:#f7fbff;font-size:12px;font-weight:600;color:var(--text);outline:none;margin-top:4px">
+        <div class="calc-item"><div class="calc-lbl">Oyun konsolu (PlayStation/Xbox)<span id="lv18">Var, eski</span></div>
+          <select id="s18" onchange="updateCalc()" style="width:100%;padding:8px 10px;border-radius:9px;border:1.5px solid #e0ecf8;background:#f7fbff;font-size:12px;font-weight:600;color:var(--text);outline:none;margin-top:4px">
             <option value="0">Yok</option>
             <option value="50" selected>Var, 5+ yıldır kullanıyorum (~50 L/gün)</option>
-            <option value="100">Yeni aldım 2-3 yıl oldu (~100 L/gün)</option>
-            <option value="200">Sürekli yeni teknoloji alıyorum (~200 L/gün)</option>
+            <option value="100">Yeni aldım, 2-3 yıl oldu (~100 L/gün)</option>
+            <option value="200">Sürekli yeni konsol alıyorum (~200 L/gün)</option>
+          </select>
+        </div>
+        <div class="calc-item"><div class="calc-lbl">Laptop / tablet kullanımı<span id="lv19">Var, orta</span></div>
+          <select id="s19" onchange="updateCalc()" style="width:100%;padding:8px 10px;border-radius:9px;border:1.5px solid #e0ecf8;background:#f7fbff;font-size:12px;font-weight:600;color:var(--text);outline:none;margin-top:4px">
+            <option value="0">Yok</option>
+            <option value="15" selected>Var, 3+ yıldır kullanıyorum (~15 L/gün)</option>
+            <option value="30">Yeni aldım (~30 L/gün)</option>
+            <option value="55">Her yıl yeniliyorum (~55 L/gün)</option>
+          </select>
+        </div>
+        <div class="calc-item"><div class="calc-lbl">Günlük ekran süresi (sosyal medya+oyun)<span id="lv20">4 saat</span></div><input type="range" min="1" max="12" value="4" id="s20" oninput="updateCalc()" step="1"></div>
+      </div>
+
+      <!-- GİZLİ GİYİM & ALIŞVERİŞ -->
+      <div class="calc-card">
+        <div class="calc-section-ttl">👕 Giyim & Alışveriş — Gizli Su!</div>
+        <div class="calc-item"><div class="calc-lbl" style="font-size:11px;color:var(--coral);font-weight:700;background:#fff5f2;padding:6px 10px;border-radius:8px">⚠️ 1 tişört = 2.700 L · 1 kot = 10.000 L · 1 ayakkabı = 8.000 L</div></div>
+        <div class="calc-item"><div class="calc-lbl">Online kıyafet alışverişi (aylık)<span id="lv21">1-2 parça</span></div>
+          <select id="s21" onchange="updateCalc()" style="width:100%;padding:8px 10px;border-radius:9px;border:1.5px solid #e0ecf8;background:#f7fbff;font-size:12px;font-weight:600;color:var(--text);outline:none;margin-top:4px">
+            <option value="0">İkinci el / hiç almıyorum 🌱</option>
+            <option value="90" selected>1-2 parça (tişört, çorap vb.)</option>
+            <option value="270">3-5 parça (hızlı moda takipçisi)</option>
+            <option value="540">6-10 parça (çok sık alışveriş)</option>
+            <option value="1080">10+ parça (sosyal medyadan etkileniyorum)</option>
+          </select>
+        </div>
+        <div class="calc-item"><div class="calc-lbl">Ayakkabı alımı (aylık)<span id="lv22">Nadiren</span></div>
+          <select id="s22" onchange="updateCalc()" style="width:100%;padding:8px 10px;border-radius:9px;border:1.5px solid #e0ecf8;background:#f7fbff;font-size:12px;font-weight:600;color:var(--text);outline:none;margin-top:4px">
+            <option value="0">İkinci el veya hiç 🌱</option>
+            <option value="67" selected>2-3 ayda bir (~67 L/gün)</option>
+            <option value="133">Ayda bir (~133 L/gün)</option>
+            <option value="267">Ayda 2+ çift (~267 L/gün)</option>
+          </select>
+        </div>
+        <div class="calc-item"><div class="calc-lbl">Kozmetik / makyaj ürünleri<span id="lv23">Az kullanım</span></div>
+          <select id="s23" onchange="updateCalc()" style="width:100%;padding:8px 10px;border-radius:9px;border:1.5px solid #e0ecf8;background:#f7fbff;font-size:12px;font-weight:600;color:var(--text);outline:none;margin-top:4px">
+            <option value="0">Kullanmıyorum</option>
+            <option value="10" selected>Az kullanım (~10 L/gün)</option>
+            <option value="25">Orta kullanım (~25 L/gün)</option>
+            <option value="50">Çok fazla ürün kullanıyorum (~50 L/gün)</option>
           </select>
         </div>
       </div>
@@ -636,9 +671,17 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
       <!-- EV -->
       <div class="calc-card">
         <div class="calc-section-ttl">🏠 Ev & Temizlik</div>
-        <div class="calc-item"><div class="calc-lbl">Çamaşır makinesi (haftada)<span id="lv16">2 kez</span></div><input type="range" min="0" max="14" value="2" id="s16" oninput="updateCalc()" step="1"></div>
-        <div class="calc-item"><div class="calc-lbl">Bulaşık (haftada)<span id="lv17">3 kez</span></div><input type="range" min="0" max="14" value="3" id="s17" oninput="updateCalc()" step="1"></div>
-        <div class="calc-item"><div class="calc-lbl">Bahçe/balkon sulama (haftada)<span id="lv18">2 kez</span></div><input type="range" min="0" max="14" value="2" id="s18" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Çamaşır makinesi (haftada)<span id="lv24">2 kez</span></div><input type="range" min="0" max="14" value="2" id="s24" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Bulaşık (haftada)<span id="lv25">3 kez</span></div><input type="range" min="0" max="14" value="3" id="s25" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Bahçe / balkon sulama (haftada)<span id="lv26">2 kez</span></div><input type="range" min="0" max="14" value="2" id="s26" oninput="updateCalc()" step="1"></div>
+        <div class="calc-item"><div class="calc-lbl">Evcil hayvan bakımı<span id="lv27">Yok</span></div>
+          <select id="s27" onchange="updateCalc()" style="width:100%;padding:8px 10px;border-radius:9px;border:1.5px solid #e0ecf8;background:#f7fbff;font-size:12px;font-weight:600;color:var(--text);outline:none;margin-top:4px">
+            <option value="0" selected>Yok</option>
+            <option value="20">Kedi / küçük hayvan (~20 L/gün)</option>
+            <option value="40">Köpek (~40 L/gün)</option>
+            <option value="60">Birden fazla hayvan (~60 L/gün)</option>
+          </select>
+        </div>
       </div>
 
       <div class="result-card">
@@ -1111,34 +1154,49 @@ function updateCalc(){
   const s16=+document.getElementById('s16').value;
   const s17=+document.getElementById('s17').value;
   const s18=+document.getElementById('s18').value;
+  const s19=+document.getElementById('s19').value;
+  const s20=+document.getElementById('s20').value;
+  const s21=+document.getElementById('s21').value;
+  const s22=+document.getElementById('s22').value;
+  const s23=+document.getElementById('s23').value;
+  const s24=+document.getElementById('s24').value;
+  const s25=+document.getElementById('s25').value;
+  const s26=+document.getElementById('s26').value;
+  const s27=+document.getElementById('s27').value;
 
   // Etiketler
   document.getElementById('lv1').textContent=s1+' dk';
-  document.getElementById('lv4').textContent=s4===0?'İçmiyorum':s4+' fincan';
-  document.getElementById('lv5').textContent=s5+' bardak';
-  document.getElementById('lv6').textContent=s6===0?'Yok':s6+' öğün';
-  document.getElementById('lv8').textContent=s8+' kez';
-  document.getElementById('lv9').textContent=s9+' adet';
-  document.getElementById('lv10').textContent=s10+' porsiyon';
-  document.getElementById('lv11').textContent=s11+' porsiyon';
-  document.getElementById('lv12').textContent=s12+' porsiyon';
-  document.getElementById('lv16').textContent=s16+' kez';
-  document.getElementById('lv17').textContent=s17+' kez';
-  document.getElementById('lv18').textContent=s18+' kez';
+  document.getElementById('lv3').textContent=s3===0?'Yok':s3+' kez';
+  document.getElementById('lv5').textContent=s5===0?'İçmiyorum':s5+' fincan';
+  document.getElementById('lv6').textContent=s6+' bardak';
+  document.getElementById('lv7').textContent=s7===0?'İçmiyorum':s7+' bardak';
+  document.getElementById('lv8').textContent=s8===0?'Yok':s8+' öğün';
+  document.getElementById('lv10').textContent=s10===0?'Yapmıyorum':s10+' gün';
+  document.getElementById('lv11').textContent=s11+' kez';
+  document.getElementById('lv12').textContent=s12+' adet';
+  document.getElementById('lv13').textContent=s13+' porsiyon';
+  document.getElementById('lv14').textContent=s14+' porsiyon';
+  document.getElementById('lv15').textContent=s15+' porsiyon';
+  document.getElementById('lv16').textContent=s16+' paket';
+  document.getElementById('lv20').textContent=s20+' saat';
+  document.getElementById('lv24').textContent=s24+' kez';
+  document.getElementById('lv25').textContent=s25+' kez';
+  document.getElementById('lv26').textContent=s26+' kez';
 
   // Kategori hesapları
-  const bakim   = Math.round(s1*9 + s2 + s3);
-  const okul    = Math.round(s4*140 + s5*35 + s6*500 + s7);
-  const gizliGida = Math.round((s8/7)*2400 + (s9/7)*1700 + (s10/7)*2200 + (s11/7)*615 + s12*153);
-  const gizliTekno = Math.round(s13 + s14 + s15);
-  const ev      = Math.round((s16/7)*60 + (s17/7)*17 + (s18/7)*30);
-  const total   = bakim + okul + gizliGida + gizliTekno + ev;
+  const bakim    = Math.round(s1*9 + s2 + (s3/7)*150 + s4);
+  const okul     = Math.round(s5*140 + s6*35 + s7*100 + s8*500 + s9 + s10*30);
+  const gizliGida= Math.round((s11/7)*2400 + (s12/7)*1700 + (s13/7)*2200 + (s14/7)*615 + s15*153 + (s16/7)*300);
+  const teknoloji= Math.round(s17 + s18 + s19 + s20*0.5);
+  const giyim    = Math.round(s21 + s22 + s23);
+  const ev       = Math.round((s24/7)*60 + (s25/7)*17 + (s26/7)*30 + s27);
+  const total    = bakim + okul + gizliGida + teknoloji + giyim + ev;
 
   document.getElementById('resNum').textContent=total.toLocaleString('tr-TR');
   const pct=Math.min(100,Math.round(total/9000*100));
   document.getElementById('resBar').style.width=pct+'%';
 
-  let cmp=total<2500?'🟢 Ortalamanın çok altında — harika!':total<4000?'🟡 Ortalama seviye (~3.800 L Türkiye ort.)':total<6000?'🟠 Ortalamanın üzerinde — azaltmayı dene!':'🔴 Çok yüksek — büyük değişimler yapabilirsin!';
+  let cmp=total<2500?'🟢 Harika! Ortalamanın çok altındasın.':total<4000?'🟡 Ortalama seviye (~3.800 L Türkiye ort.)':total<6000?'🟠 Ortalamanın üzerinde — azaltmayı dene!':'🔴 Çok yüksek — büyük değişimler yapabilirsin!';
   document.getElementById('resCompare').textContent=cmp;
 
   document.getElementById('resBreakdown').innerHTML=`
@@ -1146,20 +1204,22 @@ function updateCalc(){
     <div class="rb-row"><span>🚿 Kişisel Bakım</span><span>${bakim.toLocaleString('tr-TR')} L</span></div>
     <div class="rb-row"><span>🏫 Okul & Sosyal</span><span>${okul.toLocaleString('tr-TR')} L</span></div>
     <div class="rb-row"><span>🍫 Gizli Gıda Suyu</span><span>${gizliGida.toLocaleString('tr-TR')} L</span></div>
-    <div class="rb-row"><span>👕 Gizli Teknoloji & Giyim</span><span>${gizliTekno.toLocaleString('tr-TR')} L</span></div>
+    <div class="rb-row"><span>📱 Teknoloji (Gizli Su)</span><span>${teknoloji.toLocaleString('tr-TR')} L</span></div>
+    <div class="rb-row"><span>👕 Giyim & Alışveriş (Gizli)</span><span>${giyim.toLocaleString('tr-TR')} L</span></div>
     <div class="rb-row"><span>🏠 Ev & Temizlik</span><span>${ev.toLocaleString('tr-TR')} L</span></div>
     <div class="rb-row"><span>💧 TOPLAM</span><span>${total.toLocaleString('tr-TR')} L</span></div>
   `;
 
   const tips=[];
-  if(s1>8)  tips.push({i:'🚿',t:'Duşunu '+(s1-5)+' dk kısalt → ~'+((s1-5)*9)+' L tasarruf!'});
-  if(s10>3) tips.push({i:'🥩',t:'Haftada 1 et yemeğini baklagillerle değiştir → ~'+Math.round(2200/7)+' L/gün tasarruf!'});
-  if(s8>2)  tips.push({i:'🍔',t:'Fast food yerine ev yemeği → ~'+Math.round((s8/7)*2400)+' L/gün tasarruf!'});
-  if(s9>3)  tips.push({i:'🍫',t:'Çikolata yerine meyve → ~'+Math.round((s9/7)*1700)+' L/gün tasarruf!'});
-  if(s4>1)  tips.push({i:'☕',t:'Günde 1 kahve az iç → ~140 L tasarruf!'});
-  if(+s13>90) tips.push({i:'👕',t:'İkinci el kıyafet al veya takas yap → büyük gizli su tasarrufu!'});
-  if(+s14>9)  tips.push({i:'📱',t:'Telefonunu daha uzun kullan → yılda 12.760 L tasarruf!'});
-  if(s2>0)  tips.push({i:'🪥',t:'Diş fırçalarken musluğu kapat → ~'+s2+' L/gün tasarruf!'});
+  if(s1>8)   tips.push({i:'🚿',t:'Duşunu '+(s1-5)+' dk kısalt → ~'+((s1-5)*9)+' L/gün tasarruf!'});
+  if(s2>0)   tips.push({i:'🪥',t:'Diş fırçalarken musluğu kapat → ~'+s2+' L/gün tasarruf!'});
+  if(s13>3)  tips.push({i:'🥩',t:'Haftada 1 et yemeğini baklagillerle değiştir → ~'+Math.round(2200/7)+' L/gün!'});
+  if(s11>2)  tips.push({i:'🍔',t:'Fast food yerine ev yemeği → ~'+Math.round((s11/7)*2400)+' L/gün tasarruf!'});
+  if(s12>3)  tips.push({i:'🍫',t:'Çikolata yerine meyve → ~'+Math.round((s12/7)*1700)+' L/gün tasarruf!'});
+  if(s5>1)   tips.push({i:'☕',t:'Günde 1 kahve az iç → ~140 L tasarruf!'});
+  if(s21>90) tips.push({i:'👕',t:'İkinci el kıyafet al veya takas yap → büyük gizli su tasarrufu!'});
+  if(s17>9)  tips.push({i:'📱',t:'Telefonunu daha uzun kullan → yılda 12.760 L tasarruf!'});
+  if(s3>1)   tips.push({i:'🛁',t:'Küvet yerine duş → her seferinde ~100 L tasarruf!'});
   if(tips.length===0) tips.push({i:'🌟',t:'Harika alışkanlıklar! Bu bilinci çevrene de yay.'});
   document.getElementById('tipsList').innerHTML=tips.slice(0,5).map(t=>`<div class="tip-row"><span class="tip-ico">${t.i}</span><div class="tip-row-txt">${t.t}</div></div>`).join('');
 }
